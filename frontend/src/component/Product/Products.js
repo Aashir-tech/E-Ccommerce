@@ -8,12 +8,26 @@ import { useParams } from "react-router-dom";
 import "./Products.css";
 import Pagination from "react-js-pagination";
 import ScrollToTop from "../ExtraFeatures/ScrollToTop.js";
-import { CgFontSpacing } from "react-icons/cg";
+import Typography from "@mui/material/Typography";
+import Slider from "@mui/material/Slider";
+
+const categories = [
+  "Laptop",
+  "Footwear",
+  "Bottom",
+  "T-Shirt",
+  "Jeans",
+  "Kurta Pajama",
+  "Camera",
+  "SmartPhones"
+];
 
 const Products = () => {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [price, setPrice] = useState([0, 50000]);
+  const [category, setCategory] = useState("");
 
   const {
     products,
@@ -22,10 +36,11 @@ const Products = () => {
     errorMessage,
     resultPerPage,
     productsCount,
+    filteredProductsCount,
   } = useSelector((state) => state.products);
 
   const params = useParams();
-  const keyword = params.keyword || ""
+  const keyword = params.keyword || "";
   // console.log(params.keyword)
   // const {keyword} = params.keyword
   // console.log(params.keyword);
@@ -35,13 +50,21 @@ const Products = () => {
     // console.log(e)
   };
 
+  const priceHandler = (e, newPrice) => {
+    setPrice(newPrice);
+  };
+
   // console.log(`Current Page : ${currentPage}`)
   // console.log(`Keyword : ${keyword}`)
 
+  // console.log(filteredProductsCount)
+
   useEffect(() => {
-    dispatch(getProduct({keyword , currentPage}));
-  }, [dispatch, keyword ,currentPage]);
+    dispatch(getProduct({ keyword, currentPage, price , category }));
+  }, [dispatch, keyword, currentPage, price , category]);
   // console.log(productsCount)
+
+  let count = filteredProductsCount;
 
   return (
     <>
@@ -49,7 +72,7 @@ const Products = () => {
         <Loader />
       ) : (
         <>
-        <ScrollToTop />
+          <ScrollToTop />
           <h2 className="productsHeading">Products</h2>
           <div className="products">
             {products &&
@@ -57,8 +80,43 @@ const Products = () => {
                 <ProductCard key={product._id} product={product} />
               ))}
           </div>
-          {resultPerPage < productsCount && (
+
+          <div className="filterBox">
+            <Typography>Price</Typography>
+            <Slider
+              getAriaLabel={() => "Temperature range"}
+              value={price}
+              onChange={priceHandler}
+              valueLabelDisplay="auto"
+              min={0}
+              max={50000}
+              size="small"
+              color="primary"
+            />
+
+            <Typography>Categories</Typography>
+            <ul className="categoryBox">
+              {categories.map((category) => (
+                <li
+                  className="category-link"
+                  key={category}
+                  onClick={() => {
+                    setCategory(category);
+                  }}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
             
+            <fieldset>
+              <Typography component="legend">
+                Ratings Above
+              </Typography>
+            </fieldset>
+
+          </div>
+          {resultPerPage < count && (
             <div className="paginationBox">
               <Pagination
                 activePage={currentPage}

@@ -5,14 +5,18 @@ export const clearError = createAction("CLEAR_ERROR");
 
 export const getProduct = createAsyncThunk(
   "getProduct",
-  async ({keyword = "" , currentPage = 1} = {} , { rejectWithValue }) => { 
+  async ({keyword = "" , currentPage = 1 , price = [0 , 50000] , category} = {} , { rejectWithValue }) => { 
     try {
       
   // console.log(`Keyword inside thunk : ${keyword}`)
   // console.log(`currentPage inside thunk : ${currentPage}`)
 
       // console.log(keyword)
-      const link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}`;
+      let link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+
+      if(category) {
+        link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}`
+      }
       // console.log(link)
       const response = await axios.get(link);
       //   console.log(response.data.products)
@@ -46,6 +50,7 @@ const productsSlice = createSlice({
       state.products = action.payload.products;
       state.productsCount = action.payload.productsCount;
       state.resultPerPage = action.payload.resultPerPage;
+      state.filteredProductsCount = action.payload.filteredProductsCount;
     });
     builder.addCase(getProduct.rejected, (state, action) => {
       // state.isLoading = true;
