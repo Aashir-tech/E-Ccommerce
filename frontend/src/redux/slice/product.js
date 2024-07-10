@@ -5,17 +5,17 @@ export const clearError = createAction("CLEAR_ERROR");
 
 export const getProduct = createAsyncThunk(
   "getProduct",
-  async ({keyword = "" , currentPage = 1 , price = [0 , 50000] , category} = {} , { rejectWithValue }) => { 
+  async ({keyword = "" , currentPage = 1 , price = [0 , 50000] , category , ratings = 0} = {} , { rejectWithValue }) => { 
     try {
       
   // console.log(`Keyword inside thunk : ${keyword}`)
   // console.log(`currentPage inside thunk : ${currentPage}`)
 
       // console.log(keyword)
-      let link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+      let link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
       if(category) {
-        link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}`
+        link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`
       }
       // console.log(link)
       const response = await axios.get(link);

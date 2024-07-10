@@ -19,7 +19,7 @@ const categories = [
   "Jeans",
   "Kurta Pajama",
   "Camera",
-  "SmartPhones"
+  "SmartPhones",
 ];
 
 const Products = () => {
@@ -28,6 +28,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([0, 50000]);
   const [category, setCategory] = useState("");
+  const [ratings , setRatings] = useState(0)
 
   const {
     products,
@@ -60,8 +61,8 @@ const Products = () => {
   // console.log(filteredProductsCount)
 
   useEffect(() => {
-    dispatch(getProduct({ keyword, currentPage, price , category }));
-  }, [dispatch, keyword, currentPage, price , category]);
+    dispatch(getProduct({ keyword, currentPage, price, category , ratings}));
+  }, [dispatch, keyword, currentPage, price, category , ratings]);
   // console.log(productsCount)
 
   let count = filteredProductsCount;
@@ -82,7 +83,7 @@ const Products = () => {
           </div>
 
           <div className="filterBox">
-            <Typography>Price</Typography>
+            <Typography>Price ₹{price[0]}-₹{price[1]}</Typography>
             <Slider
               getAriaLabel={() => "Temperature range"}
               value={price}
@@ -108,13 +109,21 @@ const Products = () => {
                 </li>
               ))}
             </ul>
-            
-            <fieldset>
-              <Typography component="legend">
-                Ratings Above
-              </Typography>
-            </fieldset>
 
+            <fieldset>
+              <Typography component="legend">Ratings Above</Typography>
+              <Slider
+                aria-label="Volume"
+                value={ratings}
+                onChange={(e , newRating) => {
+                  setRatings(newRating)
+                }}
+                min={0}
+                max={5}
+                size="small"
+                valueLabelDisplay="auto"
+              />
+            </fieldset>
           </div>
           {resultPerPage < count && (
             <div className="paginationBox">

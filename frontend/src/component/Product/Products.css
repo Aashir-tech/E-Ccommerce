@@ -14,7 +14,7 @@
   padding: 0 5vmax;
   margin-left: 5vmax;
   justify-content: center;
-  min-height: 30vh;
+  min-height: 50vh;
 }
 
 .paginationBox {
@@ -92,15 +92,32 @@
   color: tomato;
 }
 
+.filterBox > fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.318);
+}
+
+
+.filterBox > fieldset {
+  font: 400 1.5vmax "Poppins";
+  margin-top: 1vmax;
+  padding: 1vmax;
+}
 
 @media screen and (max-width: 600px) {
   .filterBox {
     width: 25vmax;
-    position: absolute;
-    top: 10vmax;
-    left: 10vmax;
+    position: static;
     margin: auto;
-    margin-top: 3vmax;
+    text-align: center;
+  }
+
+  .category-link {
+    font: bold 1.5vmax "Poppins";
+  }
+
+  .filterBox > fieldset {
+    margin-top: 2vmax;
+    padding: 2vmax;
   }
 
   .productsHeading {
