@@ -92,6 +92,8 @@
 
 .productCard > img {
     width: 15vmax;
+    height: 15vmax;
+    object-fit:contain;
 }
 
 .productCard > div {
@@ -127,18 +129,41 @@
 }
 
 @media screen and (max-width : 600px) {
+    .banner > p {
+        font-size: 2.5vmax;
+    }
+    .homeHeading {
+        width: 80%;
+        font-size: 3vmax;
+    }
+    .productCard > img {
+        width: 40vh;
+        height: 30vh;
+    }
+
+    .productCard {
+        width: 50vh;
+        text-align: center;
+    }
+
     .productCard > p {
-        font-size: 1.7vmax;
+        font-size: 3vmax;
     }
 
     .productCard > div {
+        justify-content: center;
         margin: 0;
-        display: block;
+        display: flex;
     }
 
     .productCard > span {
-        font-size: 1.5vmax;
+        padding-top: 1vmax;
+        font-size: 3vmax;
+        padding-bottom: 1vmax;
+        border-bottom: 1px solid grey;
     }
+
+
 
     .productCard > div > span {
         margin: 0 0.5vmax;

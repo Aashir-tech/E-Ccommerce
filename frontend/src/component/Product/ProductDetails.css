@@ -7,12 +7,17 @@
 }
 
 .image {
-    width: 80%;
+    width: 100%;
+}
+
+.CarouselImage {
+  width: 100%;
+  object-fit: contain;
 }
 
 .carousel-container {
+  height: 100%;
     width: 50%;
-    height: 40vmax;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,9 +38,9 @@
     align-items: flex-start;
 }
 
-.CarouselImage  {
+/* .CarouselImage  {
     width: 20vmax;
-}
+} */
 
 .detailsBlock-1 > h2 {
     color: rgb(54, 54, 54);

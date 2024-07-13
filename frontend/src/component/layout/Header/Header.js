@@ -5,6 +5,7 @@ import {MdSearch} from "react-icons/md"
 import {MdAddShoppingCart} from 'react-icons/md'
 
 import {ReactNavbar} from 'overlay-navbar'
+import "./Header.css"
 
 const options = {
   burgerColorHover:"#eb4034",
@@ -12,7 +13,7 @@ const options = {
     logoWidth: "20vmax",
     navColor1: "white",
     logoHoverSize: "10px",
-    logoHoverColor: "#eb4034",
+    logoHoverColor: "white",
     link1Text: "Home",
     link2Text: "Products",
     link3Text: "Contact",
@@ -34,6 +35,7 @@ const options = {
     CartIconElement : MdAddShoppingCart,
     profileIcon : true,
     ProfileIconElement : FaUserAlt,
+    profileIconUrl : "/login",
     SearchIconElement : MdSearch,
     profileIconColor: "rgba(35, 35, 35,0.8)",
     searchIconColor: "rgba(35, 35, 35,0.8)",
@@ -48,6 +50,7 @@ const Header = () => {
   return (
     <ReactNavbar
     {...options}
+
     />
   )
 }

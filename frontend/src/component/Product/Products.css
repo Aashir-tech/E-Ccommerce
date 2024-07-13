@@ -127,8 +127,8 @@
   }
 
   .products {
-    margin-top: 10vmax;
     margin-left: 0;
+    width: 100%;
   }
 
   .page-link {

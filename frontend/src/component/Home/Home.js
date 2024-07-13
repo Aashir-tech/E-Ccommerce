@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { CgMouse } from "react-icons/cg";
-import Product from "./ProductCard.js";
+import ProductCard from "./ProductCard.js";
 import Loader from "../layout/Loader/loader.js";
 import "./Home.css";
 import MetaData from "../layout/MetaData.js";
 import { useDispatch, useSelector } from "react-redux";
 import { clearError, getProduct } from "../../redux/slice/product.js";
 import { useAlert } from "react-alert";
+// import Header from "../layout/Header/Header.js";
+import { Link } from "react-scroll";
 
 // const product = {
 //   name: "Red T-Shirt",
@@ -22,7 +24,7 @@ import { useAlert } from "react-alert";
 const Home = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { products, isLoading, isError, errorMessage , productCount } = useSelector(
+  const { products, isLoading, isError, errorMessage } = useSelector(
     (state) => state.products
   );
   // console.log("Products :", products);
@@ -31,12 +33,12 @@ const Home = () => {
 
   useEffect(() => {
     if (isError) {
-      alert.error(errorMessage)
-      dispatch(clearError())
+      alert.error(errorMessage);
+      dispatch(clearError());
     }
 
     dispatch(getProduct());
-  }, [dispatch, isError , alert , errorMessage]);
+  }, [dispatch, isError, alert, errorMessage]);
 
   return (
     <>
@@ -48,16 +50,24 @@ const Home = () => {
           <div className="banner">
             <p>Welcome to Estore</p>
             <h1>YOU CAN FIND PRODUCTS BELOW </h1>
-            <a href="#container">
+            <Link
+              to="container"
+              spy={true}
+              smooth={true}
+              offset={-150}
+              duration={500}
+            >
               <button>Scroll {<CgMouse />}</button>
-            </a>
+            </Link>
           </div>
 
           <h2 className="homeHeading">Featured Products</h2>
 
           <div className="container" id="container">
             {products &&
-              products.map((product) => <Product product={product} key={product._id} />)}
+              products.map((product) => (
+                <ProductCard product={product} key={product._id} />
+              ))}
           </div>
         </>
       )}

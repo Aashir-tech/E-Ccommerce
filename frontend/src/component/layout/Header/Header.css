@@ -1,0 +1,22 @@
+.logoReactNavbar {
+    width: 15vmax !important;
+}
+
+
+.nav1 {
+    justify-content: flex-end !important;
+}
+
+
+
+
+@media screen and (max-width: 800px) {
+    .logoReactNavbar {
+        padding-left: 4vmax;
+    }
+
+    .nav1 {
+        justify-content: center !important;
+    }
+}
+

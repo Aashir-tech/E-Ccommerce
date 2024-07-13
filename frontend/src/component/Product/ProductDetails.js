@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader/loader.js";
 import { useAlert } from "react-alert";
 import { clearError } from "../../redux/slice/product.js";
+import MetaData from "../layout/MetaData.js";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -46,6 +47,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <>
+        <MetaData title={`${product.name} -- ESTORE`} />
           <div className="productDetails">
             <div className="carousel-container">
               <Carousel className="image">

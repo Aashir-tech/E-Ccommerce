@@ -10,8 +10,11 @@ import Pagination from "react-js-pagination";
 import ScrollToTop from "../ExtraFeatures/ScrollToTop.js";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
+import { useAlert } from "react-alert";
+import MetaData from "../layout/MetaData.js";
 
 const categories = [
+  "Mobile",
   "Laptop",
   "Footwear",
   "Bottom",
@@ -24,9 +27,11 @@ const categories = [
 
 const Products = () => {
   const dispatch = useDispatch();
+  const alert = useAlert()
+
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 50000]);
+  const [price, setPrice] = useState([0, 150000]);
   const [category, setCategory] = useState("");
   const [ratings , setRatings] = useState(0)
 
@@ -61,8 +66,13 @@ const Products = () => {
   // console.log(filteredProductsCount)
 
   useEffect(() => {
+    if(isError) {
+      alert.error(errorMessage)
+      dispatch(clearError())
+    }
+
     dispatch(getProduct({ keyword, currentPage, price, category , ratings}));
-  }, [dispatch, keyword, currentPage, price, category , ratings]);
+  }, [dispatch, keyword, currentPage, price, category , ratings ,isError , errorMessage , alert ]);
   // console.log(productsCount)
 
   let count = filteredProductsCount;
@@ -73,6 +83,7 @@ const Products = () => {
         <Loader />
       ) : (
         <>
+        <MetaData title={"PRODUCTS -- ESTORE"}/>
           <ScrollToTop />
           <h2 className="productsHeading">Products</h2>
           <div className="products">
