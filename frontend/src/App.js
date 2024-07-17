@@ -11,6 +11,9 @@ import Products from "./component/Product/Products.js";
 import ScrollToTop from "./component/ExtraFeatures/ScrollToTop";
 import Search from "./component/Product/Search.js";
 import LoginSignUp from "./component/User/LoginSignUp.js";
+import { store } from "./redux/store.js";
+import { loadUser } from "./redux/slice/user.js";
+import UserOptions from './component/layout/Header/UserOptions.js'
 
 function App() {
   useEffect(() => {
@@ -19,6 +22,9 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka", "Open Sans", "Poppins"],
       },
     });
+
+    store.dispatch(loadUser())
+
   }, []);
 
   return (
@@ -26,6 +32,8 @@ function App() {
       <ScrollToTop />
       <Header />
       <Routes>
+      {isAuthenticated && <UserOptions user={user} />}
+
         <Route path="/" Component={Home} />
         <Route path="/product/:id" Component={ProductDetails} />
         <Route path="/products/" Component={Products} />

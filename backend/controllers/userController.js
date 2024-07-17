@@ -4,21 +4,42 @@ const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken")
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto")
+const cloudinary = require("cloudinary").v2
+
+
 
 // Register a User
 
 exports.registerUser = catchAsyncErrors(async (req,res,next) => {
-    const {name , email , password} = req.body;
+    // console.log(req.body.avatar)
+    try {
+        const myCloud = await cloudinary.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale"
+        })
 
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar : {
-            public_id : "This is a sample id",
-            url : "profileurl"
-        }
-    });
+        //  console.log("MY ClOud" , myCloud)
+        const {name , email , password } = req.body;
+
+        const user = await User.create({
+            name,
+            email,
+            password,
+            avatar : {
+                public_id : myCloud.public_id,
+                url : myCloud.secure_url
+            }
+        });
+
+        sendToken(user,201,res)
+    } catch (error) {
+        console.log(error)
+    }
+
+   
+
+   
 
     // const token = user.getJWTToken();
     // // console.log(token)
@@ -28,7 +49,7 @@ exports.registerUser = catchAsyncErrors(async (req,res,next) => {
     //     token
     // })
 
-    sendToken(user,201,res)
+    
 })
 
 // Login User
@@ -36,6 +57,7 @@ exports.registerUser = catchAsyncErrors(async (req,res,next) => {
 exports.loginUser = catchAsyncErrors(async (req,res,next) => {
 
     const {email , password} = req.body;
+    // console.log("Req body" , req.body)
 
     // Checking if user has given password and email both
 
@@ -44,9 +66,10 @@ exports.loginUser = catchAsyncErrors(async (req,res,next) => {
     }
 
     const user = await User.findOne({email}).select("+password");
+    // console.log(user)
 
     if(!user) {
-        console.log("skipped")
+        // console.log("skipped")
         return next(new ErrorHandler("Invalid Email or Password"),401);
     }
 

@@ -129,8 +129,12 @@
 }
 
 @media screen and (max-width : 600px) {
+    .banner > h1 {
+        font-size: 3vmax;
+    }
     .banner > p {
-        font-size: 2.5vmax;
+        font-size: 6.5vmax;
+        font-weight: bold;
     }
     .homeHeading {
         width: 80%;
