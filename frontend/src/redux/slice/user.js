@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // export const clearError = createAction("CLEAR_ERROR");
@@ -53,12 +53,30 @@ export const loadUser = createAsyncThunk(
   "loadUser",
   async (_, { rejectWithValue }) => {
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
 
       const response = await axios.get("/api/v1/me");
       console.log("Data", response);
 
       return response?.data?.user;
+    } catch (error) {
+      return rejectWithValue({
+        success: false,
+        message: error.response?.data?.message || error.message,
+      });
+    }
+  }
+);
+
+// log Out User
+export const logout = createAsyncThunk(
+  "logout",
+  async (_, { rejectWithValue }) => {
+    try {
+
+      const response = await axios.get("/api/v1/logout");
+      console.log("REsponse : " , response)
+      return response?.data?.user
+
     } catch (error) {
       return rejectWithValue({
         success: false,
@@ -131,6 +149,18 @@ const userSlice = createSlice({
       state.isError = true;
       state.errorMessage = action.payload?.message || "Failed to fetch User";
       state.user = null;
+    });
+
+    // Logout User thunks
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false ;
+      state.user = null;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload?.message || "Failed to fetch User";
     });
   },
 });

@@ -14,7 +14,7 @@ import MetaData from "../layout/MetaData.js";
 
 const ProductDetails = () => {
   const params = useParams();
-  const alert = useAlert()
+  const alert = useAlert();
   const dispatch = useDispatch();
 
   const { product, isLoading, isError, errorMessage } = useSelector(
@@ -22,13 +22,13 @@ const ProductDetails = () => {
   );
 
   useEffect(() => {
-    if(isError) {
-        alert.error(errorMessage)
-        dispatch(clearError())
+    if (isError) {
+      alert.error(errorMessage);
+      dispatch(clearError());
     }
     dispatch(getProductDetails(params.id));
     // console.log(action)
-  }, [dispatch, params.id , isError , errorMessage , alert ]);
+  }, [dispatch, params.id, isError, errorMessage, alert]);
 
   // console.log(product.images)
 
@@ -47,18 +47,20 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <>
-        <MetaData title={`${product.name} -- ESTORE`} />
+          <MetaData title={`${product.name} -- ESTORE`} />
           <div className="productDetails">
             <div className="carousel-container">
               <Carousel className="image">
                 {product.images &&
                   product.images.map((item, i) => (
-                    <img
-                      className="CarouselImage"
-                      key={i}
-                      src={item.url}
-                      alt={`${i} Slide`}
-                    />
+                    <div className="imageBox">
+                      <img
+                        className="CarouselImage"
+                        key={i}
+                        src={item.url}
+                        alt={`${i} Slide`}
+                      />
+                    </div>
                   ))}
               </Carousel>
             </div>
