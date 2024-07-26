@@ -1,21 +1,26 @@
 import { useEffect } from "react";
 import "./App.css";
-import Header from "./component/layout/Header/Header.js";
-import Footer from "./component/layout/Footer/Footer.js";
+import Header from "./component/layout/Header/Header";
+import Footer from "./component/layout/Footer/Footer";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./component/Home/Home.js";
+import Home from "./component/Home/Home";
 import WebFont from "webfontloader";
-// import loader from './component/layout/Loader/loader.js';
-import ProductDetails from "./component/Product/ProductDetails.js";
-import Products from "./component/Product/Products.js";
+// import loader from './component/layout/Loader/loader';
+import ProductDetails from "./component/Product/ProductDetails";
+import Products from "./component/Product/Products";
 import ScrollToTop from "./component/ExtraFeatures/ScrollToTop";
-import Search from "./component/Product/Search.js";
-import LoginSignUp from "./component/User/LoginSignUp.js";
-import { store } from "./redux/store.js";
-import { loadUser } from "./redux/slice/user.js";
-import UserOptions from './component/layout/Header/UserOptions.js'
+import Search from "./component/Product/Search";
+import LoginSignUp from "./component/User/LoginSignUp";
+import { store } from "./redux/store";
+import { loadUser } from "./redux/slice/user";
+import UserOptions from './component/layout/Header/UserOptions'
 import { useSelector } from "react-redux";
-import Profile from "./component/User/Profile.js"
+import Profile from "./component/User/Profile"
+import ProtectedRoute from "./component/Route/ProtectedRoute";
+import UpdateProfile from "./component/User/UpdateProfile";
+import UpdatePassword from "./component/User/UpdatePassword";
+import ForgotPassword from "./component/User/ForgotPassword"
+import ResetPassword from "./component/User/ResetPassword.js"
 
 function App() {
   const {isAuthenticated , user} = useSelector((state) => state.user)
@@ -39,14 +44,20 @@ function App() {
       <Routes>
       
 
-        <Route path="/" Component={Home} />
-        <Route path="/product/:id" Component={ProductDetails} />
-        <Route path="/products/" Component={Products} />
-        <Route path="/products/:keyword" Component={Products} />
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/products/" element={<Products />} />
+        <Route path="/products/:keyword" element={<Products />} />
 
-        <Route path="/search" Component={Search} />
-        <Route path="/account" Component={Profile} />
-        <Route path="/login" Component={LoginSignUp} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/account" element={<ProtectedRoute element={<Profile />} />} />
+        <Route path="/me/update" element={<ProtectedRoute element={<UpdateProfile />} />} />
+        <Route path="/password/update" element={<ProtectedRoute element={<UpdatePassword />} />} />
+        <Route path="/password/forgot" element={<ForgotPassword />} />
+        <Route path="/password/reset/:token" element={<ResetPassword />} />
+
+
+        <Route path="/login" element={ <LoginSignUp />} />
       </Routes>
       <Footer />
     </Router>

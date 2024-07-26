@@ -167,9 +167,7 @@ const LoginSignUp = () => {
                   </div>
                 </div>
                 <Link className="forgotButton"
-                  onClick={() => {
-                    navigate("/password/forgot");
-                  }}
+                  to="/password/forgot"
                 >
                   Forget Password ?
                 </Link>

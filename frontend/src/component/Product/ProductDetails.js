@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductDetails.css";
 import Carousel from "react-material-ui-carousel";
 import ReactStars from "react-rating-stars-component";
@@ -41,6 +41,19 @@ const ProductDetails = () => {
     isHalf: true,
   };
 
+  const [quantity , setQuantity] = useState(1)
+
+  const increaseQuantity = () => {
+    if(product.Stock <= quantity) return;
+    const qty = quantity + 1
+    setQuantity(qty)
+  }
+
+  const decreaseQuantity = () => {
+    const qty = quantity - 1
+    setQuantity(qty)
+  }
+
   return (
     <>
       {isLoading ? (
@@ -78,9 +91,9 @@ const ProductDetails = () => {
                 <h1>{`₹${product.price}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
-                    <button>-</button>
-                    <input value="1" type="number" />
-                    <button>+</button>
+                    <button onClick={decreaseQuantity}>-</button>
+                    <input value={quantity} type="number" />
+                    <button onClick={increaseQuantity}>+</button>
                   </div>{" "}
                   <button>Add to Cart</button>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SpeedDial, SpeedDialAction } from "@mui/lab";
 import { Backdrop } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -47,7 +47,7 @@ const UserOptions = ({ user }) => {
   function logoutUser() {
     dispatch(logout())
     alert.success("Logout Successfully")
-    navigate('/')
+    
   }
 
   return (

@@ -18,12 +18,14 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import {productsReducer , productDetailsReducer} from "./slice/product"
-import { userReducer } from "./slice/user";
+import { forgotPasswordReducer, updateProfileReducer, userReducer } from "./slice/user";
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
     productDetails : productDetailsReducer ,
-    user : userReducer
+    user : userReducer,
+    profile : updateProfileReducer,
+    forgotPassword : forgotPasswordReducer
   },
 });
