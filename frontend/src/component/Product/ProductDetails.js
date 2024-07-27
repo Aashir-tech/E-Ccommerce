@@ -11,6 +11,7 @@ import Loader from "../layout/Loader/loader.js";
 import { useAlert } from "react-alert";
 import { clearError } from "../../redux/slice/product.js";
 import MetaData from "../layout/MetaData.js";
+import { addItemsToCart } from "../../redux/slice/cartSlice.js";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -50,8 +51,14 @@ const ProductDetails = () => {
   }
 
   const decreaseQuantity = () => {
+    if(quantity <= 1) return 
     const qty = quantity - 1
     setQuantity(qty)
+  }
+
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart({id : params.id , quantity : quantity}))
+    alert.success("Items Added to Cart Successfully")
   }
 
   return (
@@ -92,10 +99,10 @@ const ProductDetails = () => {
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
-                    <input value={quantity} type="number" />
+                    <input readOnly value={quantity} type="number" />
                     <button onClick={increaseQuantity}>+</button>
                   </div>{" "}
-                  <button>Add to Cart</button>
+                  <button onClick={addToCartHandler}>Add to Cart</button>
                 </div>
 
                 <p>

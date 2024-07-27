@@ -17,15 +17,21 @@
 // export default store;
 
 import { configureStore } from "@reduxjs/toolkit";
-import {productsReducer , productDetailsReducer} from "./slice/product"
-import { forgotPasswordReducer, updateProfileReducer, userReducer } from "./slice/user";
+import { productsReducer, productDetailsReducer } from "./slice/product";
+import {
+  forgotPasswordReducer,
+  updateProfileReducer,
+  userReducer,
+} from "./slice/user";
+import { cartReducer } from "./slice/cartSlice";
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
-    productDetails : productDetailsReducer ,
-    user : userReducer,
-    profile : updateProfileReducer,
-    forgotPassword : forgotPasswordReducer
+    productDetails: productDetailsReducer,
+    user: userReducer,
+    profile: updateProfileReducer,
+    forgotPassword: forgotPasswordReducer,
+    cart: cartReducer,
   },
 });
