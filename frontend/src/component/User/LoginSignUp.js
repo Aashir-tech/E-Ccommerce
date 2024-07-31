@@ -3,7 +3,7 @@ import "./LoginSignUp.css";
 import Loader from "../layout/Loader/loader";
 import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FaceIcon from "@mui/icons-material/Face";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,11 +12,13 @@ import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import { useAlert } from "react-alert";
+import MetaData from "../layout/MetaData";
 
 const LoginSignUp = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation()
 
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(eyeOff);
@@ -24,6 +26,7 @@ const LoginSignUp = () => {
   const { isError, errorMessage, isAuthenticated, isLoading } = useSelector(
     (state) => state.user
   );
+
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -115,6 +118,8 @@ const LoginSignUp = () => {
     }
   };
 
+  const redirect = new URLSearchParams(location.search).get('redirect') || '/account'
+
   useEffect(() => {
     if (isError) {
       alert.error(errorMessage);
@@ -122,12 +127,13 @@ const LoginSignUp = () => {
     }
 
     if (isAuthenticated) {
-      navigate("/account");
+      navigate(redirect);
     }
-  }, [dispatch, isError, alert,errorMessage, navigate, isAuthenticated]);
+  }, [dispatch, isError, alert,errorMessage, navigate, isAuthenticated , redirect]);
 
   return (
     <>
+    <MetaData title="Login - SignUp" />
       {isLoading ? (
         <Loader />
       ) : (

@@ -1,0 +1,67 @@
+.CartItemCardImage {
+  width: 10vmax;
+}
+
+.CartItemCard {
+  display: flex;
+  padding: 1vmax 0;
+  height: 10vmax;
+  margin-bottom: 2vmax;
+  align-items: flex-start;
+}
+
+.CartItemCard > div {
+  display: flex;
+  padding-top: 1vmax;
+  margin: 0.3vmax 1vmax;
+  flex-direction: column;
+}
+
+.CartItemCard > div > a {
+  font: 300 1vmax "Poppins";
+  color: rgba(24, 24, 24, 0.815);
+  text-decoration: none;
+}
+
+.CartItemCard > div > span {
+  font: 300 1vmax "Poppins";
+  color: rgba(24, 24, 24, 0.815);
+}
+
+.CartItemCard > div > p {
+  color: tomato;
+  font: 100 0.9vmax "Roboto";
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  .CartItemCard { 
+    padding: 1vmax 0;
+    height: 20vmax;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4vmax;
+  }
+
+  .CartItemCard > img {
+    width: 13vmax;
+    height: 13vmax;
+  }
+
+  .CartItemCard > div {
+    margin: 1vmax 2vmax;
+    padding-top: 0;
+  }
+
+  .CartItemCard > div > a {
+    font: 300 2vmax "Poppins";
+  }
+
+  .CartItemCard > div > span {
+    font: 300 1.9vmax "Poppins";
+  }
+
+  .CartItemCard > div > p {
+    font: 100 1.8vmax "Poppins";
+  }
+}

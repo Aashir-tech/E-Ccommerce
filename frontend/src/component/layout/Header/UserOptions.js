@@ -4,23 +4,28 @@ import { Backdrop } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useDispatch } from "react-redux"
+import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/slice/user";
-
+import { useSelector } from "react-redux";
 
 const UserOptions = ({ user }) => {
+  const {cartItems} = useSelector((state) => state.cart)
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const alert = useAlert()
-  const dispatch = useDispatch()
+  const alert = useAlert();
+  const dispatch = useDispatch();
 
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: order },
     { icon: <PersonIcon />, name: "Profile", func: account },
+    { icon: <ShoppingCartIcon 
+    style={{color : cartItems.length > 0 ? "tomato" : "unset"}}
+    />, name: `Cart [${cartItems.length}]`, func: cart },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 
@@ -43,21 +48,23 @@ const UserOptions = ({ user }) => {
     navigate("/account");
   }
 
-  
+  function cart() {
+    navigate("/cart");
+  }
+
   function logoutUser() {
-    dispatch(logout())
-    alert.success("Logout Successfully")
-    
+    dispatch(logout());
+    alert.success("Logout Successfully");
   }
 
   return (
     <>
-    <Backdrop open={open} style={{zIndex : "10"}} />
+      <Backdrop open={open} style={{ zIndex: "10" }} />
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
-        style={{zIndex: "11"}}
+        style={{ zIndex: "11" }}
         open={open}
         direction="down"
         className="speedDial"
@@ -70,7 +77,13 @@ const UserOptions = ({ user }) => {
         }
       >
         {options.map((item) => (
-          <SpeedDialAction key={item.name} icon={item.icon} tooltipTitle={item.name} onClick={item.func} />
+          <SpeedDialAction
+            key={item.name}
+            icon={item.icon}
+            tooltipTitle={item.name}
+            onClick={item.func}
+            tooltipOpen={window.innerWidth <= 600 ? true : false}
+          />
         ))}
       </SpeedDial>
     </>
