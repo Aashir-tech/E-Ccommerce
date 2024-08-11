@@ -50,8 +50,8 @@ export const saveShippingInfo = createAsyncThunk(
 );
 
 const initialState = {
-  cartItems: JSON.parse(localStorage.getItem("cartItems") || []),
-  shippingInfo: JSON.parse(localStorage.getItem("shippingInfo") || {}),
+  cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [],
+  shippingInfo: localStorage.getItem("shippingInfo") ? JSON.parse(localStorage.getItem("shippingInfo")) : {},
 };
 
 const cartSlice = createSlice({

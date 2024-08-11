@@ -128,7 +128,10 @@ const LoginSignUp = () => {
 
     if (isAuthenticated) {
       navigate(redirect);
+      // console.log("Redirect " , redirect)
     }
+    
+    
   }, [dispatch, isError, alert,errorMessage, navigate, isAuthenticated , redirect]);
 
   return (
