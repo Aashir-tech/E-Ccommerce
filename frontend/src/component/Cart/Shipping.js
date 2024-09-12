@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import "./Shipping.css";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import HomeIcon from "@mui/icons-material/Home";
@@ -38,6 +38,22 @@ const Shipping = () => {
 
     navigate("/order/confirm")
   };
+
+  useEffect(() => {
+    // Logic to determine where to navigate back
+    const handleBackNavigation = (e) => {
+      e.preventDefault(); // Prevent the default back button action
+      navigate('/cart');  // Navigate to the cart page when going back
+    };
+
+    window.addEventListener('popstate', handleBackNavigation);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('popstate', handleBackNavigation);
+    };
+  }, [navigate]);
+
   return (
     <>
     <MetaData title="Shipping Details" />

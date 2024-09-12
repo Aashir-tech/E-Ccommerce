@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SpeedDial, SpeedDialAction } from "@mui/lab";
+import { SpeedDial , SpeedDialAction } from '@mui/material'
 import { Backdrop } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DashboardIcon from "@mui/icons-material/Dashboard";

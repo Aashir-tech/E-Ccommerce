@@ -17,7 +17,7 @@ const ConfirmOrder = () => {
 
   const shippingCharges = subTotal > 1000 ? 0 : 200;
 
-  const tax = subTotal * 0.18;
+  const tax = Math.round(subTotal * 0.18);
 
   const totalPrice = subTotal + shippingCharges + tax;
   const address = `${shippingInfo.address} , ${shippingInfo.city} ,  ${shippingInfo.state} , ${shippingInfo.pinCode} , ${shippingInfo.country} , `;
@@ -97,7 +97,7 @@ const ConfirmOrder = () => {
               <p>
                 <b>Total : </b>
               </p>
-              <span>₹{totalPrice}</span>
+              <span style={{fontSize : "bold"}}>₹{totalPrice}</span>
             </div>
             <button onClick={proceedToPayment}>Proceed to Payment</button>
           </div>

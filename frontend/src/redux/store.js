@@ -24,6 +24,7 @@ import {
   userReducer,
 } from "./slice/user";
 import { cartReducer } from "./slice/cartSlice";
+import { newOrderReducer } from "./slice/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -33,5 +34,6 @@ export const store = configureStore({
     profile: updateProfileReducer,
     forgotPassword: forgotPasswordReducer,
     cart: cartReducer,
+    newOrder : newOrderReducer
   },
 });

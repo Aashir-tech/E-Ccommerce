@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./App.css";
 import Header from "./component/layout/Header/Header";
 import Footer from "./component/layout/Footer/Footer";
@@ -13,20 +14,33 @@ import Search from "./component/Product/Search";
 import LoginSignUp from "./component/User/LoginSignUp";
 import { store } from "./redux/store";
 import { loadUser } from "./redux/slice/user";
-import UserOptions from './component/layout/Header/UserOptions'
+import UserOptions from "./component/layout/Header/UserOptions";
 import { useSelector } from "react-redux";
-import Profile from "./component/User/Profile"
+import Profile from "./component/User/Profile";
 import ProtectedRoute from "./component/Route/ProtectedRoute";
 import UpdateProfile from "./component/User/UpdateProfile";
 import UpdatePassword from "./component/User/UpdatePassword";
-import ForgotPassword from "./component/User/ForgotPassword"
-import ResetPassword from "./component/User/ResetPassword"
-import Cart from "./component/Cart/Cart"
-import Shipping from "./component/Cart/Shipping"
-import ConfirmOrder from './component/Cart/ConfirmOrder.js'
+import ForgotPassword from "./component/User/ForgotPassword";
+import ResetPassword from "./component/User/ResetPassword";
+import Cart from "./component/Cart/Cart";
+import Shipping from "./component/Cart/Shipping";
+import ConfirmOrder from "./component/Cart/ConfirmOrder.js";
+import Payment from "./component/Cart/Payment.js";
 
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { useAlert } from "react-alert";
 function App() {
-  const {isAuthenticated , user} = useSelector((state) => state.user)
+  const alert = useAlert();
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+      const { data } = await axios.get("/api/v1/stripeapikey");
+
+      setStripeApiKey(data.stripeApiKey);
+  }
 
   useEffect(() => {
     WebFont.load({
@@ -35,8 +49,9 @@ function App() {
       },
     });
 
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
 
+    getStripeApiKey();
   }, []);
 
   return (
@@ -45,27 +60,53 @@ function App() {
       <Header />
       {isAuthenticated && <UserOptions user={user} />}
       <Routes>
-      
-
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/products/" element={<Products />} />
         <Route path="/products/:keyword" element={<Products />} />
 
         <Route path="/search" element={<Search />} />
-        <Route path="/account" element={<ProtectedRoute element={<Profile />} />} />
-        <Route path="/me/update" element={<ProtectedRoute element={<UpdateProfile />} />} />
-        <Route path="/password/update" element={<ProtectedRoute element={<UpdatePassword />} />} />
+        <Route
+          path="/account"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
+        <Route
+          path="/me/update"
+          element={<ProtectedRoute element={<UpdateProfile />} />}
+        />
+        <Route
+          path="/password/update"
+          element={<ProtectedRoute element={<UpdatePassword />} />}
+        />
         <Route path="/password/forgot" element={<ForgotPassword />} />
         <Route path="/password/reset/:token" element={<ResetPassword />} />
 
+        <Route path="/login" element={<LoginSignUp />} />
+        <Route path="/cart" element={<Cart />} />
 
-        <Route path="/login" element={ <LoginSignUp />} />
-        <Route path="/cart" element={ <Cart />} />
+        <Route
+          path="/shipping"
+          element={<ProtectedRoute element={<Shipping />} />}
+        />
+        <Route
+          path="/order/confirm"
+          element={<ProtectedRoute element={<ConfirmOrder />} />}
+        />
 
-        <Route path="/shipping" element={<ProtectedRoute element={<Shipping />} />} />
-        <Route path="/order/confirm" element={<ProtectedRoute element={<ConfirmOrder/>} />} />
-
+        <Route
+          path="/process/payment"
+          element={
+            <ProtectedRoute
+              element={
+                stripeApiKey && (
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <Payment />
+                  </Elements>
+                )
+              }
+            />
+          }
+        />
       </Routes>
       <Footer />
     </Router>
