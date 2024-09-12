@@ -28,3 +28,4 @@ npm-debug.log
 
 # Ignore yarn's lock file (yarn.lock)
 yarn.lock
+backend/config/config.env
