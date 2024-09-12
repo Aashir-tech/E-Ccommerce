@@ -2,7 +2,7 @@
 **/node_modules/
 
 # Ignore environment variables file (e.g., .env)
-.env
+backend/config/config.env
 
 # Ignore build directories for frontend frameworks like React
 /build/
@@ -28,4 +28,4 @@ npm-debug.log
 
 # Ignore yarn's lock file (yarn.lock)
 yarn.lock
-backend/config/config.env
+
