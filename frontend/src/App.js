@@ -26,10 +26,14 @@ import Cart from "./component/Cart/Cart";
 import Shipping from "./component/Cart/Shipping";
 import ConfirmOrder from "./component/Cart/ConfirmOrder.js";
 import Payment from "./component/Cart/Payment.js";
+import OrderSuccess from "./component/Cart/OrderSuccess.js";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAlert } from "react-alert";
+
+
+
 function App() {
   const alert = useAlert();
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -107,7 +111,15 @@ function App() {
             />
           }
         />
+
+        <Route
+          path="/success"
+          element={<ProtectedRoute element={<OrderSuccess />} />}
+        />
+
       </Routes>
+
+
       <Footer />
     </Router>
   );

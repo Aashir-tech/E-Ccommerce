@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const createOrder = createAsyncThunk(
     "createOrder",
-    async ({order}) => {
+    async (order) => {
         try {
             const config = {
                 headers : {
@@ -12,7 +12,7 @@ export const createOrder = createAsyncThunk(
             }
 
             const {data} = await axios.post("/api/v1/order/new", order , config);
-
+            // console.log(data)
             return data;
 
         } catch (error) {
@@ -48,8 +48,9 @@ const orderSlice = createSlice({
         });
 
         builder.addCase(createOrder.rejected , (state, action) => {
+            state.isError = true;
             state.isLoading = true;
-            state.order = action.payload;
+            state.errorMessage = action.payload;
         });
     }
     
