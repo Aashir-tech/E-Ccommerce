@@ -53,7 +53,7 @@ const orderSlice = createSlice({
 
         builder.addCase(createOrder.rejected , (state, action) => {
             state.isError = true;
-            state.isLoading = true;
+            state.isLoading = false;
             state.errorMessage = action.payload;
         });
 
@@ -100,7 +100,7 @@ const myOrdersSlice = createSlice({
 
         builder.addCase(myOrders.rejected , (state, action) => {
             state.isError = true;
-            state.isLoading = true;
+            state.isLoading = false;
             state.errorMessage = action.payload;
         });
 
@@ -150,7 +150,7 @@ const orderDetailsSlice = createSlice({
 
         builder.addCase(getOrderDetails.rejected , (state, action) => {
             state.isError = true;
-            state.isLoading = true;
+            state.isLoading = false;
             state.errorMessage = action.payload;
         });
 
