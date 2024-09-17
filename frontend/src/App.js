@@ -33,6 +33,8 @@ import OrderDetails from "./component/Order/OrderDetails.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAlert } from "react-alert";
+import Contact from './component/layout/Contact/Contact'
+import About from './component/layout/About/About.js'
 
 function App() {
   const alert = useAlert();
@@ -70,6 +72,9 @@ function App() {
         <Route path="/products/:keyword" element={<Products />} />
 
         <Route path="/search" element={<Search />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+
         <Route
           path="/account"
           element={<ProtectedRoute element={<Profile />} />}

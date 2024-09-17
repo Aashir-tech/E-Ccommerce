@@ -5,11 +5,11 @@
 }
 
 .banner {
-    background: hsla(197, 100%, 63%, 1);
-    background: linear-gradient(to right, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
-    background: -moz-linear-gradient(to right, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
-    background: -webkit-linear-gradient(to right, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
+    background-image: url('../../images/cover.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
     height : 100vmin;
     text-align: center;
     display: flex;
@@ -22,7 +22,7 @@
 
 .banner > h1 {
     margin: 4vmax;
-    font: 600 2.5vmax "Roboto";
+    font: 600 3.5vmax "Poppins";
   }
   
   .banner > p {
@@ -37,7 +37,7 @@
     padding: 1vmax;
     transition: all 0.5s;
     width: 9vmax;
-    font: 500 1vmax "Roboto";
+    font: 500 1vmax "Poppins";
 }
 
 .banner > a > button:hover {
@@ -60,7 +60,7 @@
 
 .homeHeading {
     text-align : center;
-    font-family: "Roboto";
+    font-family: "Poppins";
     font-size : 1.4vmax;
     border-bottom : 1px solid rgba(9, 18, 33, 0.5);
     width: 20vmax;
