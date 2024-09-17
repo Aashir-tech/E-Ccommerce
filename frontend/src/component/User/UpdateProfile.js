@@ -11,7 +11,7 @@ import {
   removeError,
   reset,
   updateProfile,
-} from "../../redux/slice/user";
+} from "../../redux/slice/userSlice";
 import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 

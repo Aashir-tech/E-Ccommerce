@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Products.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearError, getProduct } from "../../redux/slice/product.js";
+import { clearError, getProduct } from "../../redux/slice/productSlice.js";
 import Loader from "../layout/Loader/loader.js";
 import ProductCard from "../Home/ProductCard.js";
 import { useParams } from "react-router-dom";
@@ -27,13 +27,12 @@ const categories = [
 
 const Products = () => {
   const dispatch = useDispatch();
-  const alert = useAlert()
-
+  const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([0, 150000]);
   const [category, setCategory] = useState("");
-  const [ratings , setRatings] = useState(0)
+  const [ratings, setRatings] = useState(0);
 
   const {
     products,
@@ -66,13 +65,23 @@ const Products = () => {
   // console.log(filteredProductsCount)
 
   useEffect(() => {
-    if(isError) {
-      alert.error(errorMessage)
-      dispatch(clearError())
+    if (isError) {
+      alert.error(errorMessage);
+      dispatch(clearError());
     }
 
-    dispatch(getProduct({ keyword, currentPage, price, category , ratings}));
-  }, [dispatch, keyword, currentPage, price, category , ratings ,isError , errorMessage , alert ]);
+    dispatch(getProduct({ keyword, currentPage, price, category, ratings }));
+  }, [
+    dispatch,
+    keyword,
+    currentPage,
+    price,
+    category,
+    ratings,
+    isError,
+    errorMessage,
+    alert,
+  ]);
   // console.log(productsCount)
 
   let count = filteredProductsCount;
@@ -83,7 +92,7 @@ const Products = () => {
         <Loader />
       ) : (
         <>
-        <MetaData title={"PRODUCTS -- ESTORE"}/>
+          <MetaData title={"PRODUCTS -- ESTORE"} />
           <ScrollToTop />
           <h2 className="productsHeading">Products</h2>
           <div className="products">
@@ -94,7 +103,9 @@ const Products = () => {
           </div>
 
           <div className="filterBox">
-            <Typography>Price ₹{price[0]}-₹{price[1]}</Typography>
+            <Typography>
+              Price ₹{price[0]}-₹{price[1]}
+            </Typography>
             <Slider
               getAriaLabel={() => "Temperature range"}
               value={price}
@@ -126,8 +137,8 @@ const Products = () => {
               <Slider
                 aria-label="Volume"
                 value={ratings}
-                onChange={(e , newRating) => {
-                  setRatings(newRating)
+                onChange={(e, newRating) => {
+                  setRatings(newRating);
                 }}
                 min={0}
                 max={5}

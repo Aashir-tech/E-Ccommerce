@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import FaceIcon from "@mui/icons-material/Face";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector, useDispatch } from "react-redux";
-import { login, clearError, register } from "../../redux/slice/user";
+import { login, clearError, register } from "../../redux/slice/userSlice";
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
@@ -18,7 +18,7 @@ const LoginSignUp = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(eyeOff);
@@ -26,7 +26,6 @@ const LoginSignUp = () => {
   const { isError, errorMessage, isAuthenticated, isLoading } = useSelector(
     (state) => state.user
   );
-
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -39,7 +38,7 @@ const LoginSignUp = () => {
     name: "",
     email: "",
     password: "",
-    avatar : null
+    avatar: null,
   });
 
   const { name, email, password } = user;
@@ -68,7 +67,7 @@ const LoginSignUp = () => {
     //   console.log(key, value);
     // }
     // console.log("FORM DATA " , myForm)
-    dispatch(register(myForm))
+    dispatch(register(myForm));
   };
 
   const registerDataChange = (e) => {
@@ -77,7 +76,7 @@ const LoginSignUp = () => {
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          console.log("Inside Register Data CHange",reader.result)
+          console.log("Inside Register Data CHange", reader.result);
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
         }
@@ -118,7 +117,8 @@ const LoginSignUp = () => {
     }
   };
 
-  const redirect = new URLSearchParams(location.search).get('redirect') || '/account'
+  const redirect =
+    new URLSearchParams(location.search).get("redirect") || "/account";
 
   useEffect(() => {
     if (isError) {
@@ -130,13 +130,19 @@ const LoginSignUp = () => {
       navigate(redirect);
       // console.log("Redirect " , redirect)
     }
-    
-    
-  }, [dispatch, isError, alert,errorMessage, navigate, isAuthenticated , redirect]);
+  }, [
+    dispatch,
+    isError,
+    alert,
+    errorMessage,
+    navigate,
+    isAuthenticated,
+    redirect,
+  ]);
 
   return (
     <>
-    <MetaData title="Login - SignUp" />
+      <MetaData title="Login - SignUp" />
       {isLoading ? (
         <Loader />
       ) : (
@@ -175,9 +181,7 @@ const LoginSignUp = () => {
                     <Icon icon={icon} size={20} />
                   </div>
                 </div>
-                <Link className="forgotButton"
-                  to="/password/forgot"
-                >
+                <Link className="forgotButton" to="/password/forgot">
                   Forget Password ?
                 </Link>
                 <input type="submit" value="Login" className="Loginbtn" />

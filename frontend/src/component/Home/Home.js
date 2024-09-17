@@ -5,7 +5,7 @@ import Loader from "../layout/Loader/loader.js";
 import "./Home.css";
 import MetaData from "../layout/MetaData.js";
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, getProduct } from "../../redux/slice/product.js";
+import { clearError, getProduct } from "../../redux/slice/productSlice.js";
 import { useAlert } from "react-alert";
 // import Header from "../layout/Header/Header.js";
 import { Link } from "react-scroll";

@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import LockIcon from "@mui/icons-material/Lock";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import { removeError, updatePassword, reset } from "../../redux/slice/user";
+import {
+  removeError,
+  updatePassword,
+  reset,
+} from "../../redux/slice/userSlice";
 import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { Icon } from "react-icons-kit";

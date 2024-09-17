@@ -13,7 +13,7 @@ import ScrollToTop from "./component/ExtraFeatures/ScrollToTop";
 import Search from "./component/Product/Search";
 import LoginSignUp from "./component/User/LoginSignUp";
 import { store } from "./redux/store";
-import { loadUser } from "./redux/slice/user";
+import { loadUser } from "./redux/slice/userSlice.js";
 import UserOptions from "./component/layout/Header/UserOptions";
 import { useSelector } from "react-redux";
 import Profile from "./component/User/Profile";
@@ -28,14 +28,11 @@ import ConfirmOrder from "./component/Cart/ConfirmOrder.js";
 import Payment from "./component/Cart/Payment.js";
 import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import MyOrders from "./component/Order/MyOrders.js";
-import OrderDetails from './component/Order/OrderDetails.js';
-
+import OrderDetails from "./component/Order/OrderDetails.js";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAlert } from "react-alert";
-
-
 
 function App() {
   const alert = useAlert();
@@ -44,9 +41,9 @@ function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
   async function getStripeApiKey() {
-      const { data } = await axios.get("/api/v1/stripeapikey");
+    const { data } = await axios.get("/api/v1/stripeapikey");
 
-      setStripeApiKey(data.stripeApiKey);
+    setStripeApiKey(data.stripeApiKey);
   }
 
   useEffect(() => {
@@ -129,9 +126,7 @@ function App() {
           path="/order/:id"
           element={<ProtectedRoute element={<OrderDetails />} />}
         />
-
       </Routes>
-
 
       <Footer />
     </Router>

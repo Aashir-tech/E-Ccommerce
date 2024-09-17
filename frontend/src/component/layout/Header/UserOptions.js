@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SpeedDial , SpeedDialAction } from '@mui/material'
+import { SpeedDial, SpeedDialAction } from "@mui/material";
 import { Backdrop } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -10,11 +10,11 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slice/user";
+import { logout } from "../../../redux/slice/userSlice";
 import { useSelector } from "react-redux";
 
 const UserOptions = ({ user }) => {
-  const {cartItems} = useSelector((state) => state.cart)
+  const { cartItems } = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const alert = useAlert();
@@ -23,9 +23,15 @@ const UserOptions = ({ user }) => {
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: order },
     { icon: <PersonIcon />, name: "Profile", func: account },
-    { icon: <ShoppingCartIcon 
-    style={{color : cartItems.length > 0 ? "tomato" : "unset"}}
-    />, name: `Cart [${cartItems.length}]`, func: cart },
+    {
+      icon: (
+        <ShoppingCartIcon
+          style={{ color: cartItems.length > 0 ? "tomato" : "unset" }}
+        />
+      ),
+      name: `Cart [${cartItems.length}]`,
+      func: cart,
+    },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 

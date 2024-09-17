@@ -4,7 +4,7 @@ import Loader from "../layout/Loader/loader";
 import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
 // import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeError, forgotPassword } from "../../redux/slice/user";
+import { removeError, forgotPassword } from "../../redux/slice/userSlice";
 import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 
@@ -35,7 +35,7 @@ const ForgotPassword = () => {
     if (message) {
       alert.success(message);
     }
-  }, [dispatch, isError , errorMessage, alert, message]);
+  }, [dispatch, isError, errorMessage, alert, message]);
   return (
     <>
       {isLoading ? (

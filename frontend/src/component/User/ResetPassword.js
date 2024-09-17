@@ -5,7 +5,7 @@ import Loader from "../layout/Loader/loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import LockIcon from "@mui/icons-material/Lock";
-import { removeError, resetPassword } from "../../redux/slice/user";
+import { removeError, resetPassword } from "../../redux/slice/userSlice";
 import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { Icon } from "react-icons-kit";
@@ -13,7 +13,7 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 
 const ResetPassword = () => {
-    const params = useParams()
+  const params = useParams();
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const ResetPassword = () => {
     myForm.append("password", password);
     myForm.append("confirmPassword", confirmPassword);
 
-    dispatch(resetPassword({token : params.token, passwords : myForm}));
+    dispatch(resetPassword({ token: params.token, passwords: myForm }));
   };
 
   const handleTogglePassword = () => {
@@ -88,7 +88,6 @@ const ResetPassword = () => {
                 className="resetPasswordForm"
                 onSubmit={resetPasswordSubmit}
               >
-            
                 <div>
                   <LockOpenIcon />
                   <input

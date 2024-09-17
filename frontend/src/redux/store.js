@@ -17,14 +17,18 @@
 // export default store;
 
 import { configureStore } from "@reduxjs/toolkit";
-import { productsReducer, productDetailsReducer } from "./slice/product";
+import { productsReducer, productDetailsReducer } from "./slice/productSlice";
 import {
   forgotPasswordReducer,
   updateProfileReducer,
   userReducer,
-} from "./slice/user";
+} from "./slice/userSlice";
 import { cartReducer } from "./slice/cartSlice";
-import { myOrdersReducer, newOrderReducer, orderDetailsReducer } from "./slice/orderSlice";
+import {
+  myOrdersReducer,
+  newOrderReducer,
+  orderDetailsReducer,
+} from "./slice/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -34,8 +38,8 @@ export const store = configureStore({
     profile: updateProfileReducer,
     forgotPassword: forgotPasswordReducer,
     cart: cartReducer,
-    newOrder : newOrderReducer,
-    myOrders : myOrdersReducer,
-    orderDetails : orderDetailsReducer
+    newOrder: newOrderReducer,
+    myOrders: myOrdersReducer,
+    orderDetails: orderDetailsReducer,
   },
 });
