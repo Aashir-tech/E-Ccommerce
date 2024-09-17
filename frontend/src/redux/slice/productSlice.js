@@ -162,7 +162,7 @@ const newReviewSlice = createSlice({
     builder.addCase(newReview.rejected, (state, action) => {
       // state.isLoading = true;
       state.isError = true;
-      state.errorMessage = action.payload.message
+      state.errorMessage = action.payload
     });
     builder.addCase( clearError , (state , action) => {
       state.errorMessage = null;

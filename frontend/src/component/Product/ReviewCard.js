@@ -4,12 +4,13 @@ import profilePng from '../../images/user.png'
 
 const ReviewCard = ({review}) => {
 
-    const options = {
-        name : "half-rating",
-        defaultValue : review.rating,
-        readOnly : true,
-        precision : 0.5
-    }
+  const options = {
+    size: "large",
+    value: review.rating,
+    readOnly: true,
+    precision: 0.5
+  };
+
   return (
     <div className='reviewCard'>
         <img src={profilePng} alt='User' />

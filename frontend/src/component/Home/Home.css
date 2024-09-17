@@ -103,7 +103,7 @@
     align-items: center;
 }
 
-.productCard > div > span {
+.productCardSpan {
     margin: 0.4vmax;
     padding-top: 0.2vmax;
     font: 300 1vmax "Poppins";

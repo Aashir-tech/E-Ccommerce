@@ -74,6 +74,11 @@
     padding: 1vmax 0;
 }
 
+.detailsBlock-2-span {
+  font: 200 1vmax "Poppins";
+  padding-left: 1vmax;
+}
+
 .detailsBlock-3 > h1 {
     color: rgba(17, 17, 17, 0.795);
     font: 400 1.8vmax "Franklin Gothic Medium";
@@ -170,7 +175,7 @@
     margin: 1vmax 0;
     outline: none;
     padding: 1rem;
-    font: 300 1rem "Roboto";
+    font: 300 1rem "Poppins";
   }
 
   .submitDialogTitle {
@@ -184,14 +189,14 @@
  }
 
  .submitDialogContentHeading {
-  font: 300 1rem "Roboto";
+  font: 300 1rem "Poppins";
     padding-right: 1vmax ;
     padding-left: 1vmax;
  }
 
   .reviewsHeading {
     color: #000000be;
-    font: 500 1.4vmax "Roboto";
+    font: 500 1.4vmax "Poppins";
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.226);
     padding: 1vmax;
@@ -221,7 +226,8 @@
   }
   .reviewCard > p {
     color: rgba(0, 0, 0, 0.836);
-    font: 600 0.9vmax "Roboto";
+    font: 600 0.9vmax "Poppins";
+    padding: 1vmax;
   }
   .reviewCardComment {
     padding-top: 1vmax;
@@ -230,7 +236,7 @@
   }
   
   .noReviews {
-    font: 400 1.3vmax "Gill Sans";
+    font: 400 1.3vmax "Open Sans";
     text-align: center;
     color: rgba(0, 0, 0, 0.548);
   }

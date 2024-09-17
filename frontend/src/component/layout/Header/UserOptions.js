@@ -12,6 +12,7 @@ import { useAlert } from "react-alert";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/slice/userSlice";
 import { useSelector } from "react-redux";
+import HomeIcon from '@mui/icons-material/Home';
 
 const UserOptions = ({ user }) => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -21,6 +22,7 @@ const UserOptions = ({ user }) => {
   const dispatch = useDispatch();
 
   const options = [
+    {icon : <HomeIcon /> , name:  "Home" , func : home },
     { icon: <ListAltIcon />, name: "Orders", func: order },
     { icon: <PersonIcon />, name: "Profile", func: account },
     {
@@ -41,6 +43,9 @@ const UserOptions = ({ user }) => {
       name: "Dashboard",
       func: dashboard,
     });
+  }
+  function home() {
+    navigate('/');
   }
 
   function dashboard() {

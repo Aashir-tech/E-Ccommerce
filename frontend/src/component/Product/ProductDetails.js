@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductDetails.css";
 import Carousel from "react-material-ui-carousel";
-import ReactStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard.js";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -44,12 +43,10 @@ const ProductDetails = () => {
   // console.log(product.images)
 
   const options = {
-    edit: false,
-    color: "rgba(20,20,20,0.1)",
-    size: window.innerWidth < 600 ? 15 : 20,
-    activeColor: "tomato",
+    size: "large",
     value: product?.ratings,
-    isHalf: true,
+    readOnly: true,
+    precision: 0.5
   };
 
   const [quantity, setQuantity] = useState(1);
@@ -141,8 +138,8 @@ const ProductDetails = () => {
                 <p>Product # {product._id}</p>
               </div>
               <div className="detailsBlock-2">
-                <ReactStars {...options} />
-                <span>{product.numOfReviews} Reviews</span>
+                <Rating {...options} />
+                <span className="detailsBlock-2-span">{product.numOfReviews} Reviews</span>
               </div>
               <div className="detailsBlock-3">
                 <h1>{`₹${product.price}`}</h1>
