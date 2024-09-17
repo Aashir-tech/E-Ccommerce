@@ -161,6 +161,34 @@
     transform: scale(1.1);
   }
 
+  .submitDialog {
+    display: flex;
+    flex-direction: column;
+  }
+  .submitDialogTextArea {
+    border: 1px solid rgba(0, 0, 0, 0.359);
+    margin: 1vmax 0;
+    outline: none;
+    padding: 1rem;
+    font: 300 1rem "Roboto";
+  }
+
+  .submitDialogTitle {
+    text-align: center;
+
+  }
+  
+ .submitDialogContent {
+    display: flex;
+    align-items: center;
+ }
+
+ .submitDialogContentHeading {
+  font: 300 1rem "Roboto";
+    padding-right: 1vmax ;
+    padding-left: 1vmax;
+ }
+
   .reviewsHeading {
     color: #000000be;
     font: 500 1.4vmax "Roboto";

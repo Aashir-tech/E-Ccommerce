@@ -17,7 +17,7 @@
 // export default store;
 
 import { configureStore } from "@reduxjs/toolkit";
-import { productsReducer, productDetailsReducer } from "./slice/productSlice";
+import { productsReducer, productDetailsReducer, newReviewReducer } from "./slice/productSlice";
 import {
   forgotPasswordReducer,
   updateProfileReducer,
@@ -41,5 +41,6 @@ export const store = configureStore({
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
     orderDetails: orderDetailsReducer,
+    newReview : newReviewReducer
   },
 });

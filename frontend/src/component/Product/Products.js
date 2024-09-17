@@ -112,7 +112,7 @@ const Products = () => {
               onChange={priceHandler}
               valueLabelDisplay="auto"
               min={0}
-              max={50000}
+              max={200000}
               size="small"
               color="primary"
             />

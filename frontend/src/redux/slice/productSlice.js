@@ -116,11 +116,68 @@ const productDetailsSlice = createSlice({
   },
 });
 
+// NEw Review
+export const newReview = createAsyncThunk(
+  "newReview",
+  async (reviewData, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers : { "Content-type" : "application/json"}
+      }
+
+      const response = await axios.put(`/api/v1/review` , reviewData , config);
+
+      return response?.data.success;
+      
+    } catch (error) {
+      return rejectWithValue({
+        success: false,
+        message: error.response?.data?.message || error.message,
+      })
+    }
+  }
+);
+
+const newReviewSlice = createSlice({
+  name: "productDetails",
+  initialState: {
+    isLoading: false,
+    review: {},
+    isError: false,
+    errorMessage: "",
+  },
+  reducers : {
+    reviewReset : (state) => {
+      state.success = false
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(newReview.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(newReview.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.success = action.payload;
+    });
+    builder.addCase(newReview.rejected, (state, action) => {
+      // state.isLoading = true;
+      state.isError = true;
+      state.errorMessage = action.payload.message
+    });
+    builder.addCase( clearError , (state , action) => {
+      state.errorMessage = null;
+    });
+    
+  },
+});
+
 // export default productSlice.reducer;
 // export default productDetailsSlice.reducer;
 
 
+export const {reviewReset} = newReviewSlice.actions;
 export const productsReducer = productsSlice.reducer;
 export const productDetailsReducer = productDetailsSlice.reducer
+export const newReviewReducer = newReviewSlice.reducer
 
 // 6:17
