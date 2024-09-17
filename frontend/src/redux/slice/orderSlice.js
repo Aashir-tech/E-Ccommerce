@@ -111,7 +111,58 @@ const myOrdersSlice = createSlice({
     
 })
 
+// Get Order Details
+export const getOrderDetails = createAsyncThunk(
+    "getOrderDetails",
+    async (id) => {
+        try {
+            const {data} = await axios.get(`/api/v1/order/${id}`);
+            // console.log(data)
+            return data.order;
+
+        } catch (error) {
+            return isRejectedWithValue({
+                success: false,
+                payload: error.response?.data?.message || error.message,
+              })
+        }
+    }
+)
+
+const orderDetailsSlice = createSlice({
+    name : "orderDetails",
+    initialState : {
+        isLoading : true,
+        order : {},
+        isError: false,
+        errorMessage: "",
+    },
+    extraReducers : (builder) => {
+        // My Orders thunk
+        builder.addCase(getOrderDetails.pending , (state,action) => {
+            state.isLoading = true
+        });
+
+        builder.addCase(getOrderDetails.fulfilled , (state, action) => {
+            state.isLoading = false;
+            state.order = action.payload;
+        });
+
+        builder.addCase(getOrderDetails.rejected , (state, action) => {
+            state.isError = true;
+            state.isLoading = true;
+            state.errorMessage = action.payload;
+        });
+
+        builder.addCase(clearErrors , (state , action ) => {
+            state.errorMessage = null;
+        })
+    }
+    
+})
+
 export const {removeError} = orderSlice.actions;
 
 export const newOrderReducer = orderSlice.reducer;
 export const myOrdersReducer = myOrdersSlice.reducer;
+export const orderDetailsReducer = orderDetailsSlice.reducer;

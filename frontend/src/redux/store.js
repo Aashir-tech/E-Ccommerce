@@ -24,7 +24,7 @@ import {
   userReducer,
 } from "./slice/user";
 import { cartReducer } from "./slice/cartSlice";
-import { myOrdersReducer, newOrderReducer } from "./slice/orderSlice";
+import { myOrdersReducer, newOrderReducer, orderDetailsReducer } from "./slice/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +35,7 @@ export const store = configureStore({
     forgotPassword: forgotPasswordReducer,
     cart: cartReducer,
     newOrder : newOrderReducer,
-    myOrders : myOrdersReducer
+    myOrders : myOrdersReducer,
+    orderDetails : orderDetailsReducer
   },
 });
