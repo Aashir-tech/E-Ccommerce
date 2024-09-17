@@ -119,6 +119,7 @@ const productDetailsSlice = createSlice({
 // export default productSlice.reducer;
 // export default productDetailsSlice.reducer;
 
+
 export const productsReducer = productsSlice.reducer;
 export const productDetailsReducer = productDetailsSlice.reducer
 

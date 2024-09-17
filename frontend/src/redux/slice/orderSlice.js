@@ -1,5 +1,7 @@
-import { createAsyncThunk , createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk , createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
+
+export const clearErrors = createAction("CLEAR_ERROR");
 
 export const createOrder = createAsyncThunk(
     "createOrder",
@@ -29,6 +31,7 @@ const orderSlice = createSlice({
     initialState : {
         isLoading : true,
         order : {},
+        orders : [],
         isError: false,
         errorMessage: "",
     },
@@ -38,6 +41,7 @@ const orderSlice = createSlice({
         }
     },
     extraReducers : (builder) => {
+        // New Orders thunk
         builder.addCase(createOrder.pending , (state,action) => {
             state.isLoading = true
         });
@@ -52,9 +56,62 @@ const orderSlice = createSlice({
             state.isLoading = true;
             state.errorMessage = action.payload;
         });
+
+    }
+    
+});
+
+// My Orders
+export const myOrders = createAsyncThunk(
+    "myOrders",
+    async () => {
+        try {
+            const {data} = await axios.get("/api/v1/orders/me");
+            console.log(data)
+            return data.orders;
+
+        } catch (error) {
+            return isRejectedWithValue({
+                success: false,
+                payload: error.response?.data?.message || error.message,
+              })
+        }
+    }
+)
+
+const myOrdersSlice = createSlice({
+    name : "myOrders",
+    initialState : {
+        isLoading : true,
+        orders : [],
+        isError: false,
+        errorMessage: "",
+    },
+    extraReducers : (builder) => {
+        // My Orders thunk
+        builder.addCase(myOrders.pending , (state,action) => {
+            state.isLoading = true
+        });
+
+        builder.addCase(myOrders.fulfilled , (state, action) => {
+            state.isLoading = false;
+            state.orders = action.payload;
+        });
+
+        builder.addCase(myOrders.rejected , (state, action) => {
+            state.isError = true;
+            state.isLoading = true;
+            state.errorMessage = action.payload;
+        });
+
+        builder.addCase(clearErrors , (state , action ) => {
+            state.errorMessage = null;
+        })
     }
     
 })
 
 export const {removeError} = orderSlice.actions;
+
 export const newOrderReducer = orderSlice.reducer;
+export const myOrdersReducer = myOrdersSlice.reducer;

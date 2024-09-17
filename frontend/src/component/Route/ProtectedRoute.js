@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate} from "react-router-dom";
+import { Navigate, redirect, useLocation} from "react-router-dom";
 import Loader from "../layout/Loader/loader";
 
 const ProtectedRoute = ({ element }) => {
@@ -8,9 +8,16 @@ const ProtectedRoute = ({ element }) => {
     (state) => state.user
   );
 
-  if (isLoading) return <Loader />;
+  const location = useLocation();
 
-  return isAuthenticated ? element : <Navigate to="/login" />;
+
+  if (isLoading) return <Loader />;
+  
+  return isAuthenticated ? (
+    element
+  ) : (
+    <Navigate to={`/login?redirect=${location.pathname}`} />
+  );
 };
 
 export default ProtectedRoute;
