@@ -30,6 +30,14 @@ app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 
+// Default route for the root path
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Backend server is running successfully."
+  });
+});
+
 // MiddleWare for handling errors
 app.use(errorMiddleware);
 
