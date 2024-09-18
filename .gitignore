@@ -2,7 +2,7 @@
 **/node_modules/
 
 # Ignore environment variables file (e.g., .env)
-backend/config/config.env
+*.env
 
 # Ignore build directories for frontend frameworks like React
 /build/
