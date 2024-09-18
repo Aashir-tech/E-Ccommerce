@@ -33,8 +33,9 @@ import OrderDetails from "./component/Order/OrderDetails.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAlert } from "react-alert";
-import Contact from './component/layout/Contact/Contact'
-import About from './component/layout/About/About.js'
+import Contact from "./component/layout/Contact/Contact";
+import About from "./component/layout/About/About.js";
+import NotFound from "./component/layout/Not Found/NotFound.js";
 
 function App() {
   const alert = useAlert();
@@ -65,7 +66,11 @@ function App() {
       <ScrollToTop />
       <Header />
       {isAuthenticated && <UserOptions user={user} />}
+
+
       <Routes>
+        
+      
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/products/" element={<Products />} />
@@ -103,21 +108,6 @@ function App() {
         />
 
         <Route
-          path="/process/payment"
-          element={
-            <ProtectedRoute
-              element={
-                stripeApiKey && (
-                  <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Payment />
-                  </Elements>
-                )
-              }
-            />
-          }
-        />
-
-        <Route
           path="/success"
           element={<ProtectedRoute element={<OrderSuccess />} />}
         />
@@ -131,6 +121,32 @@ function App() {
           path="/order/:id"
           element={<ProtectedRoute element={<OrderDetails />} />}
         />
+
+        <Route
+        path="/process/payment"
+        element={
+          <ProtectedRoute
+            element={
+              stripeApiKey && (
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                  <Payment />
+                </Elements>
+              )
+            }
+          />
+        }
+      />
+
+<Route path="*" element={<NotFound />} />
+{/* 
+        <Route
+          path="*"
+          element={
+            window.location.pathname === "/process/payment" ? null : (
+              <NotFound />
+            )
+          } */}
+        {/* /> */}
       </Routes>
 
       <Footer />

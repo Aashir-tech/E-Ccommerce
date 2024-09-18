@@ -76,7 +76,7 @@ const LoginSignUp = () => {
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          console.log("Inside Register Data CHange", reader.result);
+          // console.log("Inside Register Data CHange", reader.result);
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
         }
