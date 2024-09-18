@@ -38,7 +38,7 @@ import About from "./component/layout/About/About.js";
 import NotFound from "./component/layout/Not Found/NotFound.js";
 
 function App() {
-  const alert = useAlert();
+  // const alert = useAlert();
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   const [stripeApiKey, setStripeApiKey] = useState("");
