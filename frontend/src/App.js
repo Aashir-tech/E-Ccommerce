@@ -32,7 +32,7 @@ import OrderDetails from "./component/Order/OrderDetails.js";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import Contact from "./component/layout/Contact/Contact";
 import About from "./component/layout/About/About.js";
 import NotFound from "./component/layout/Not Found/NotFound.js";
