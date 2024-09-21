@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
+const cors = require("cors")
 
 const path = require("path");
 
@@ -29,6 +30,9 @@ app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
+
+// Enable CORS for all origins
+app.use(cors());
 
 // Default route for the root path
 app.get("/", (req, res) => {
