@@ -63,13 +63,12 @@ function App() {
 
   return (
     <Router>
-      
-
-
-      <Routes>
-        <ScrollToTop />
+      <ScrollToTop />
       <Header />
       {isAuthenticated && <UserOptions user={user} />}
+
+      <Routes>
+        
         
       
         <Route path="/" element={<Home />} />
