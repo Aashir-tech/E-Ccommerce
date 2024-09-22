@@ -24,11 +24,11 @@ const Profile = () => {
         <Loader />
       ) : (
         <>
-          <MetaData title={`${user && user.name}'s Profile`} />
+          <MetaData title={`${user?.name}'s Profile`} />
           <div className="profileContainer">
             <div>
               <h1>My Profile</h1>
-              <img src={user?.avatar?.url} alt={user && user.name} style={{width : "300px" , height:"300px"}}/>
+              <img src={user?.avatar?.url} alt={user?.name} style={{width : "300px" , height:"300px"}}/>
               <Link to="/me/update">Edit Profile</Link>
             </div>
             <div>
