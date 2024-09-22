@@ -43,7 +43,7 @@ const LoginSignUp = () => {
   });
 
   const { name, email, password } = user;
-  const [avatar, setAvatar] = useState(<AccountCircleIcon />);
+  const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(null);
   // console.log(avatarPreview);
 
