@@ -34,7 +34,8 @@ app.use("/api/v1", payment);
 app.use(cors({
   origin: 'https://e-commerce-kuxr.onrender.com/', // Add your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Enable CORS for all origins
