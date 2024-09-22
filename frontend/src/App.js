@@ -46,7 +46,7 @@ function App() {
   async function getStripeApiKey() {
     const { data } = await axios.get("/api/v1/stripeapikey");
 
-    setStripeApiKey(data.stripeApiKey);
+    setStripeApiKey(data?.stripeApiKey);
   }
 
   useEffect(() => {
@@ -68,8 +68,6 @@ function App() {
       {isAuthenticated && <UserOptions user={user} />}
 
       <Routes>
-        
-        
       
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
@@ -122,7 +120,7 @@ function App() {
           element={<ProtectedRoute element={<OrderDetails />} />}
         />
 
-        
+
 
         <Route
         path="/process/payment"
