@@ -5,7 +5,7 @@ export const clearError = createAction("CLEAR_ERROR");
 
 export const getProduct = createAsyncThunk(
   "getProduct",
-  async ({keyword = "" , currentPage = 1 , price = [0 , 150000] , category , ratings = 0} = {} , { rejectWithValue }) => { 
+  async ({keyword = "" , currentPage = 1 , price = [0 , 200000] , category , ratings = 0} = {} , { rejectWithValue }) => { 
     try {
       
   // console.log(`Keyword inside thunk : ${keyword}`)
@@ -26,7 +26,7 @@ export const getProduct = createAsyncThunk(
     } catch (error) {
       return rejectWithValue({
         success: false,
-        message: error.response?.data?.message || error.message,
+        message: error?.response?.data?.message || error.message,
       })
     }
   }
