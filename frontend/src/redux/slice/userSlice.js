@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_API_URL;
 
 // export const clearError = createAction("CLEAR_ERROR");
 
@@ -12,7 +13,7 @@ export const login = createAsyncThunk(
       const config = { headers: { "Content-Type": "application/json" } };
 
       const response = await axios.post(
-        "/api/v1/login",
+        `${baseUrl}/api/v1/login`,
         { email, password },
         config
       );
@@ -36,7 +37,7 @@ export const register = createAsyncThunk(
     try {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-      const response = await axios.post("/api/v1/register", userData, config);
+      const response = await axios.post(`${baseUrl}/api/v1/register`, userData, config);
       // console.log("Data", response);
 
       return response?.data?.user;
@@ -53,7 +54,7 @@ export const loadUser = createAsyncThunk(
   "loadUser",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/me");
+      const response = await axios.get(`${baseUrl}/api/v1/me`);
       // console.log("Data", response);
 
       return response?.data?.user;
@@ -71,7 +72,7 @@ export const logout = createAsyncThunk(
   "logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/logout");
+      const response = await axios.get(`${baseUrl}/api/v1/logout`);
       console.log("REsponse : ", response);
       return response?.data?.user;
     } catch (error) {
@@ -90,7 +91,7 @@ export const updateProfile = createAsyncThunk(
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       // console.log("USER DATA",userData)
 
-      const response = await axios.put("/api/v1/me/update", userData, config);
+      const response = await axios.put(`${baseUrl}/api/v1/me/update`, userData, config);
       // console.log("RESPONSE : " , response)
 
       return response?.data?.success;
@@ -110,7 +111,7 @@ export const updatePassword = createAsyncThunk(
       const config = { headers: { "Content-Type": "application/json" } };
 
       const response = await axios.put(
-        "/api/v1/password/update",
+        `${baseUrl}/api/v1/password/update`,
         password,
         config
       );
@@ -132,7 +133,7 @@ export const forgotPassword = createAsyncThunk(
       const config = { headers: { "Content-Type": "application/json" } };
 
       const response = await axios.post(
-        "/api/v1/password/forgot",
+        `${baseUrl}/api/v1/password/forgot`,
         email,
         config
       );
@@ -155,7 +156,7 @@ export const resetPassword = createAsyncThunk(
       const config = { headers: { "Content-Type": "application/json" } };
 
       const response = await axios.put(
-        `/api/v1/password/reset/${token}` ,
+        `${baseUrl}/api/v1/password/reset/${token}` ,
         passwords,
         config
       );

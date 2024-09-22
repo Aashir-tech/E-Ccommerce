@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_API_URL;
+
 
 // Add TO cart
 export const addItemsToCart = createAsyncThunk(
   "cart/addItemsToCart",
   async ({ id, quantity }, { dispatch, getState }) => {
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await axios.get(`${baseUrl}/api/v1/product/${id}`);
 
     dispatch(
       addToCart({

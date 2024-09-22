@@ -1,5 +1,6 @@
 import { createAction, createAsyncThunk , createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_API_URL;
 
 export const clearErrors = createAction("CLEAR_ERROR");
 
@@ -13,7 +14,7 @@ export const createOrder = createAsyncThunk(
                 }
             }
 
-            const {data} = await axios.post("/api/v1/order/new", order , config);
+            const {data} = await axios.post(`${baseUrl}/api/v1/order/new`, order , config);
             // console.log(data)
             return data;
 
@@ -66,7 +67,7 @@ export const myOrders = createAsyncThunk(
     "myOrders",
     async () => {
         try {
-            const {data} = await axios.get("/api/v1/orders/me");
+            const {data} = await axios.get(`${baseUrl}/api/v1/orders/me`);
             console.log(data)
             return data.orders;
 
@@ -116,7 +117,7 @@ export const getOrderDetails = createAsyncThunk(
     "getOrderDetails",
     async (id) => {
         try {
-            const {data} = await axios.get(`/api/v1/order/${id}`);
+            const {data} = await axios.get(`${baseUrl}/api/v1/order/${id}`);
             // console.log(data)
             return data.order;
 

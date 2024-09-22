@@ -6,12 +6,30 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const cors = require("cors")
 
+const allowedOrigins = [
+  'https://e-commerce-kuxr.onrender.com',  // Production frontend
+  'http://localhost:3000'  // Development frontend
+];
+
 app.use(cors({
-  origin: 'https://e-commerce-kuxr.onrender.com/', // Add your frontend URL
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// app.use(cors({
+//   origin: 'https://e-commerce-kuxr.onrender.com', // Add your frontend URL
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
 
 
 const path = require("path");
@@ -54,13 +72,13 @@ app.get("/", (req, res) => {
 // MiddleWare for handling errors
 app.use(errorMiddleware);
 
-// // Serve static assets from the "build" folder of the frontend
-// app.use(express.static(path.join(__dirname, "../frontend/build")));
+// Serve static assets from the "build" folder of the frontend
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-// // Handle client-side routing by always serving index.html for unknown paths
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
-// });
+// Handle client-side routing by always serving index.html for unknown paths
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+});
 
 // Export app module for use in server
 module.exports = app;

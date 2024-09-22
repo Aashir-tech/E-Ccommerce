@@ -2,6 +2,7 @@ import { createAction , createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const clearError = createAction("CLEAR_ERROR");
+const baseUrl = process.env.REACT_APP_API_URL;
 
 export const getProduct = createAsyncThunk(
   "getProduct",
@@ -10,10 +11,10 @@ export const getProduct = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      let link = `/api/v1/products/?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      let link = `${baseUrl}/api/v1/products/?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
       if (category) {
-        link = `/api/v1/products/?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+        link = `${baseUrl}/api/v1/products/?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const response = await axios.get(link);
@@ -120,7 +121,7 @@ export const newReview = createAsyncThunk(
         headers : { "Content-type" : "application/json"}
       }
 
-      const response = await axios.put(`/api/v1/review` , reviewData , config);
+      const response = await axios.put(`${baseUrl}/api/v1/review` , reviewData , config);
 
       return response?.data.success;
       
