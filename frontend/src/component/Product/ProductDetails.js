@@ -30,6 +30,9 @@ const ProductDetails = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
+  const { isError : isUserError, errorMessage :isUserErrorMessage, isAuthenticated, isLoading : isUserLoading } = useSelector(
+    (state) => state.user
+  );
   const { product, isLoading, isError, errorMessage } = useSelector(
     (state) => state.productDetails
   );
@@ -76,12 +79,18 @@ const ProductDetails = () => {
   };
 
   const reviewSubmitHandler = () => {
+    if (!isAuthenticated) {
+      alert.error("Please Login to submit Review on Products !");
+      return;  // Prevent the function from proceeding further
+    }
+
     const myForm = new FormData();
 
     myForm.set("rating", rating);
     myForm.set("comment", comment);
     myForm.set("productId", params.id);
 
+    
     dispatch(newReview(myForm));
 
     setOpen(false);
@@ -97,12 +106,12 @@ const ProductDetails = () => {
       alert.error(reviewErrorMessage);
       dispatch(clearError());
     }
-
+    
     if(success) {
       alert.success("Review Submitted Successfully")
 
       dispatch(reviewReset());
-    }
+    } 
 
     dispatch(getProductDetails(params.id));
     // console.log(action)
