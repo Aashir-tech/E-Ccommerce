@@ -6,6 +6,14 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const cors = require("cors")
 
+app.use(cors({
+  origin: 'https://e-commerce-kuxr.onrender.com/', // Add your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+
 const path = require("path");
 
 // Configure environment variables
@@ -31,23 +39,9 @@ app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 
-app.use(cors({
-  origin: 'https://e-commerce-kuxr.onrender.com/', // Add your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
 
 // Enable CORS for all origins
 // app.use(cors());
-
-// Serve static assets from the "build" folder of the frontend
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-// Handle client-side routing by always serving index.html for unknown paths
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
-});
 
 // Default route for the root path
 app.get("/", (req, res) => {
@@ -59,6 +53,14 @@ app.get("/", (req, res) => {
 
 // MiddleWare for handling errors
 app.use(errorMiddleware);
+
+// Serve static assets from the "build" folder of the frontend
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// Handle client-side routing by always serving index.html for unknown paths
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+});
 
 // Export app module for use in server
 module.exports = app;
