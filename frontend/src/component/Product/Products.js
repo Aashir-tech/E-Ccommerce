@@ -30,7 +30,7 @@ const Products = () => {
   const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 150000]);
+  const [price, setPrice] = useState([0, 200000]);
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
 
