@@ -54,13 +54,13 @@ app.get("/", (req, res) => {
 // MiddleWare for handling errors
 app.use(errorMiddleware);
 
-// Serve static assets from the "build" folder of the frontend
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+// // Serve static assets from the "build" folder of the frontend
+// app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-// Handle client-side routing by always serving index.html for unknown paths
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
-});
+// // Handle client-side routing by always serving index.html for unknown paths
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+// });
 
 // Export app module for use in server
 module.exports = app;

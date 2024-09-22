@@ -5,33 +5,28 @@ export const clearError = createAction("CLEAR_ERROR");
 
 export const getProduct = createAsyncThunk(
   "getProduct",
-  async ({keyword = "" , currentPage = 1 , price = [0 , 200000] , category , ratings = 0} = {} , { rejectWithValue }) => { 
+  async (
+    { keyword = "", currentPage = 1, price = [0, 200000], category, ratings = 0 } = {},
+    { rejectWithValue }
+  ) => {
     try {
-      
-  // console.log(`Keyword inside thunk : ${keyword}`)
-  // console.log(`currentPage inside thunk : ${currentPage}`)
+      let link = `/api/v1/products/?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
-      // console.log(keyword)
-      let link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
-
-      if(category) {
-        link = `/api/v1/products/?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`
+      if (category) {
+        link = `/api/v1/products/?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
-      // console.log(link)
+
       const response = await axios.get(link);
-      //   console.log(response.data.products)
-
       return response?.data;
-
     } catch (error) {
+      console.error(error); // Log error for debugging
       return rejectWithValue({
         success: false,
         message: error?.response?.data?.message || error.message,
-      })
+      });
     }
   }
 );
-
 
 const productsSlice = createSlice({
   name: "product",
