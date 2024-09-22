@@ -91,7 +91,7 @@ const ProductDetails = () => {
     myForm.set("productId", params.id);
 
     
-    dispatch(newReview(myForm));
+    dispatch(newReview({myForm}));
 
     setOpen(false);
   };
