@@ -13,6 +13,7 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const LoginSignUp = () => {
   const alert = useAlert();
@@ -42,7 +43,7 @@ const LoginSignUp = () => {
   });
 
   const { name, email, password } = user;
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState(<AccountCircleIcon />);
   const [avatarPreview, setAvatarPreview] = useState(null);
   // console.log(avatarPreview);
 
