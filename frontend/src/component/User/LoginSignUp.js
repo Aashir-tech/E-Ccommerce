@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import FaceIcon from "@mui/icons-material/Face";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector, useDispatch } from "react-redux";
-import { login, clearError, register } from "../../redux/slice/userSlice";
+import { login, clearError, register, loadUser } from "../../redux/slice/userSlice";
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
@@ -130,6 +130,8 @@ const LoginSignUp = () => {
 
     if (isAuthenticated) {
       navigate(redirect);
+      alert.success("Logged in successfuly")
+      loadUser();
       // console.log("Redirect " , redirect)
     }
   }, [
