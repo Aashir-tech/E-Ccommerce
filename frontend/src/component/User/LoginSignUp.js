@@ -69,6 +69,7 @@ const LoginSignUp = () => {
     // }
     // console.log("FORM DATA " , myForm)
     dispatch(register(myForm));
+    alert.success("Thank You for Registration !");
   };
 
   const registerDataChange = (e) => {

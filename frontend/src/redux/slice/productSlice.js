@@ -123,7 +123,7 @@ export const newReview = createAsyncThunk(
 
       const response = await axios.put(`${baseUrl}/api/v1/review` , reviewData , config);
 
-      return response?.data.success;
+      return response?.data?.success;
       
     } catch (error) {
       return rejectWithValue({
@@ -135,7 +135,7 @@ export const newReview = createAsyncThunk(
 );
 
 const newReviewSlice = createSlice({
-  name: "productDetails",
+  name: "newReview",
   initialState: {
     isLoading: false,
     review: {},
