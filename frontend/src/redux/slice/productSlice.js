@@ -60,10 +60,10 @@ const productsSlice = createSlice({
       // console.log("Action Payload : " , action.payload)
       // console.log("Error", action.error.message);
     });
-    // builder.addCase(clearError , (state , action) => {
-    //   state.isError = false
-    //   state.errorMessage = null;
-    // })
+    builder.addCase(clearError , (state , action) => {
+      state.isError = false
+      state.errorMessage = null;
+    })
   },
 });
 

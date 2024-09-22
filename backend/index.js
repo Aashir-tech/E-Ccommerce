@@ -40,6 +40,14 @@ app.use(cors({
 // Enable CORS for all origins
 // app.use(cors());
 
+// Serve static assets from the "build" folder of the frontend
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// Handle client-side routing by always serving index.html for unknown paths
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+});
+
 // Default route for the root path
 app.get("/", (req, res) => {
   res.status(200).json({
