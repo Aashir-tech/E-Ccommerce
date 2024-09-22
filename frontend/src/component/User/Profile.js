@@ -34,15 +34,15 @@ const Profile = () => {
             <div>
               <div>
                 <h4>Full Name</h4>
-                <p>{user && user.name}</p>
+                <p>{user?.name}</p>
               </div>
               <div>
                 <h4>Email</h4>
-                <p>{user && user.email}</p>
+                <p>{user?.email}</p>
               </div>
               <div>
                 <h4>Joined On</h4>
-                <p>{String(user.createdAt).substring(0, 10)}</p>
+                <p>{String(user?.createdAt).substring(0, 10)}</p>
               </div>
               <div>
                 <Link to="/orders">My Orders</Link>
