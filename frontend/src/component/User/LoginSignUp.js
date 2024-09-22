@@ -13,7 +13,7 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const LoginSignUp = () => {
   const alert = useAlert();
