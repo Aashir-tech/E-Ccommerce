@@ -33,41 +33,47 @@ import OrderDetails from "./component/Order/OrderDetails.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useDispatch } from "react-redux";
-// import { useAlert } from "react-alert";
+import { useAlert } from "react-alert";
 import Contact from "./component/layout/Contact/Contact";
 import About from "./component/layout/About/About.js";
 import NotFound from "./component/layout/Not Found/NotFound.js";
 
 function App() {
-  // const alert = useAlert();
-  const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const alert = useAlert();
+const dispatch = useDispatch();
+const { isAuthenticated, user } = useSelector((state) => state.user);
+const baseUrl = process.env.REACT_APP_API_URL;
 
-  const [stripeApiKey, setStripeApiKey] = useState("");
+const [stripeApiKey, setStripeApiKey] = useState("");
 
-  async function getStripeApiKey() {
-    const { data } = await axios.get("/api/v1/stripeapikey");
-
-    setStripeApiKey(data?.stripeApiKey);
+async function getStripeApiKey() {
+  try {
+    const { data } = await axios.get(`${baseUrl}/api/v1/stripeapikey`, { withCredentials: true });
+    setStripeApiKey(data.stripeApiKey);
+  } catch (error) {
+    alert.error("Failed to fetch Stripe API key.");
+    console.error("Error fetching Stripe API key:", error);
   }
+}
 
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ["Roboto", "Droid Sans", "Chilanka", "Open Sans", "Poppins"],
-      },
-    });
+useEffect(() => {
+  WebFont.load({
+    google: {
+      families: ["Roboto", "Droid Sans", "Chilanka", "Open Sans", "Poppins"],
+    },
+  });
 
-    store.dispatch(loadUser());
+  dispatch(loadUser());
+  getStripeApiKey();
+}, [dispatch ]); // I can add isAuthenticated if I want to refetch the key when authentication state changes
 
-    getStripeApiKey();
-  }, [dispatch]);
 
   return (
     <Router>
       <ScrollToTop />
       <Header />
       {isAuthenticated && <UserOptions user={user} />}
+      
 
       <Routes>
       

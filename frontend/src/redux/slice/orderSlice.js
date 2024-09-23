@@ -11,7 +11,8 @@ export const createOrder = createAsyncThunk(
             const config = {
                 headers : {
                     "Content-Type" : "application/json"
-                }
+                },
+                withCredentials: true,
             }
 
             const {data} = await axios.post(`${baseUrl}/api/v1/order/new`, order , config);
@@ -67,7 +68,7 @@ export const myOrders = createAsyncThunk(
     "myOrders",
     async () => {
         try {
-            const {data} = await axios.get(`${baseUrl}/api/v1/orders/me`);
+            const {data} = await axios.get(`${baseUrl}/api/v1/orders/me`,{ withCredentials: true},);
             console.log(data)
             return data.orders;
 
@@ -117,7 +118,7 @@ export const getOrderDetails = createAsyncThunk(
     "getOrderDetails",
     async (id) => {
         try {
-            const {data} = await axios.get(`${baseUrl}/api/v1/order/${id}`);
+            const {data} = await axios.get(`${baseUrl}/api/v1/order/${id}` , {withCredentials: true});
             // console.log(data)
             return data.order;
 

@@ -10,7 +10,7 @@ export const login = createAsyncThunk(
     // const {loginEmail , loginPassword} = credentials
     // console.log("Login Email in thunk", email);
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
+      const config = { headers: { "Content-Type": "application/json" } , withCredentials: true,};
 
       const response = await axios.post(
         `${baseUrl}/api/v1/login`,
@@ -21,10 +21,7 @@ export const login = createAsyncThunk(
 
       return response?.data?.user;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -35,17 +32,14 @@ export const register = createAsyncThunk(
     // console.log(userData)
 
     try {
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = { headers: { "Content-Type": "multipart/form-data" } , withCredentials: true, };
 
       const response = await axios.post(`${baseUrl}/api/v1/register`, userData, config);
       // console.log("Data", response);
 
       return response?.data?.user;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -54,15 +48,15 @@ export const loadUser = createAsyncThunk(
   "loadUser",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${baseUrl}/api/v1/me`);
-      console.log("Data", response);
+      const config = {
+        withCredentials: true, // Ensure the cookie with token is included
+      };
+      const response = await axios.get(`${baseUrl}/api/v1/me` , config);
+      // console.log("Data", response);
 
       return response?.data?.user;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error?.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -76,10 +70,7 @@ export const logout = createAsyncThunk(
       console.log("REsponse : ", response);
       return response?.data?.user;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -88,7 +79,7 @@ export const updateProfile = createAsyncThunk(
   "updateProfile",
   async (userData, { rejectWithValue }) => {
     try {
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = { headers: { "Content-Type": "multipart/form-data" } , withCredentials: true};
       // console.log("USER DATA",userData)
 
       const response = await axios.put(`${baseUrl}/api/v1/me/update`, userData, config);
@@ -96,10 +87,7 @@ export const updateProfile = createAsyncThunk(
 
       return response?.data?.success;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -108,7 +96,7 @@ export const updatePassword = createAsyncThunk(
   "updatePassword",
   async (password, { rejectWithValue }) => {
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
+      const config = { headers: { "Content-Type": "application/json" } , withCredentials: true,};
 
       const response = await axios.put(
         `${baseUrl}/api/v1/password/update`,
@@ -118,10 +106,7 @@ export const updatePassword = createAsyncThunk(
 
       return response?.data?.success;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -130,7 +115,7 @@ export const forgotPassword = createAsyncThunk(
   "forgotPassword",
   async (email, { rejectWithValue }) => {
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
+      const config = { headers: { "Content-Type": "application/json" } , withCredentials: true, };
 
       const response = await axios.post(
         `${baseUrl}/api/v1/password/forgot`,
@@ -141,10 +126,7 @@ export const forgotPassword = createAsyncThunk(
 
       return response?.data?.message;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -153,7 +135,7 @@ export const resetPassword = createAsyncThunk(
   "resetPassword",
   async ({token , passwords}, { rejectWithValue }) => {
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
+      const config = { headers: { "Content-Type": "application/json" } , withCredentials: true, };
 
       const response = await axios.put(
         `${baseUrl}/api/v1/password/reset/${token}` ,
@@ -164,10 +146,7 @@ export const resetPassword = createAsyncThunk(
 
       return response?.data?.success;
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -184,6 +163,7 @@ const userSlice = createSlice({
   },
   reducers: {
     clearError: (state) => {
+      state.isError = false;
       state.errorMessage = null;
     },
   },
@@ -200,7 +180,7 @@ const userSlice = createSlice({
     builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
       state.user = null;
     });
 
@@ -217,7 +197,7 @@ const userSlice = createSlice({
     builder.addCase(register.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
       state.user = null;
     });
 
@@ -234,7 +214,7 @@ const userSlice = createSlice({
     builder.addCase(loadUser.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
       state.user = null;
     });
 
@@ -247,7 +227,7 @@ const userSlice = createSlice({
     builder.addCase(logout.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
     });
   },
 });
@@ -257,6 +237,7 @@ const updateSlice = createSlice({
   initialState: {},
   reducers: {
     removeError: (state) => {
+      state.isError = false;
       state.errorMessage = null;
     },
     reset: (state) => {
@@ -275,7 +256,7 @@ const updateSlice = createSlice({
     builder.addCase(updateProfile.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
     });
 
     // Update Password thunks
@@ -289,7 +270,7 @@ const updateSlice = createSlice({
     builder.addCase(updatePassword.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
     });
   },
 });
@@ -300,6 +281,7 @@ const forgotPasswordSlice = createSlice({
   initialState: {},
   reducers: {
     removeError: (state) => {
+      state.isError = false;
       state.errorMessage = null;
     }
   },
@@ -318,7 +300,7 @@ const forgotPasswordSlice = createSlice({
     builder.addCase(forgotPassword.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
     });
 
 
@@ -335,7 +317,7 @@ const forgotPasswordSlice = createSlice({
     builder.addCase(resetPassword.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch User";
+      state.errorMessage = action.payload || "Failed to fetch User";
     });
   },
 });

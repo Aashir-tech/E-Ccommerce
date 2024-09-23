@@ -12,7 +12,7 @@ import {
 import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader/loader.js";
 import { useAlert } from "react-alert";
-import { clearError } from "../../redux/slice/productSlice.js";
+import { clearErrorReview , clearError } from "../../redux/slice/productSlice.js";
 import MetaData from "../layout/MetaData.js";
 import { addItemsToCart } from "../../redux/slice/cartSlice.js";
 
@@ -98,20 +98,22 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
+    console.log("Error Message : ", errorMessage)
     if (isError) {
       alert.error(errorMessage);
       dispatch(clearError());
     }
-
+    
+    console.log("Error Message : ", reviewErrorMessage)
     if (isReviewError) {
       alert.error(reviewErrorMessage);
-      dispatch(clearError());
+      dispatch(clearErrorReview());
     }
     
     if(success) {
       alert.success("Review Submitted Successfully")
       dispatch(reviewReset());
-      
+
     } 
 
     dispatch(getProductDetails(params.id));

@@ -6,6 +6,17 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const cors = require("cors")
 
+const path = require("path");
+
+// Configure environment variables
+require("dotenv").config({
+  path: "./.env"
+});
+// app.use(cors({
+//   origin : "http://localhost:3000",
+//   credentials: true, 
+// }));
+
 const allowedOrigins = [
   'https://e-commerce-kuxr.onrender.com',  // Production frontend
   'http://localhost:3000'  // Development frontend
@@ -19,9 +30,7 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // app.use(cors({
@@ -31,13 +40,6 @@ app.use(cors({
 //   allowedHeaders: ['Content-Type', 'Authorization'],
 // }));
 
-
-const path = require("path");
-
-// Configure environment variables
-require("dotenv").config({
-  path: "./.env"
-});
 
 const errorMiddleware = require("./middleware/error.js");
 
@@ -59,7 +61,7 @@ app.use("/api/v1", payment);
 
 
 // Enable CORS for all origins
-// app.use(cors());
+
 
 // Default route for the root path
 app.get("/", (req, res) => {

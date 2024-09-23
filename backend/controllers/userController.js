@@ -205,43 +205,44 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // Update User profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
-  // console.log("REQ BODY" , req.body)
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-  };
-
-  if (req.body.avatar !== "") {
-    // "Inside function update Profile"
-    const user = await User.findById(req.user.id);
-
-    const imageId = user.avatar.public_id;
-    // console.log(imageId)
-    await cloudinary.uploader.destroy(imageId);
-
-    const myCloud = await cloudinary.uploader.upload(req.body.avatar, {
-      foler: "avatars",
-      width: 150,
-      crop: "scale",
+  try {
+    if (req.body.avatar && req.body.avatar !== "") {
+      const user = await User.findById(req.user.id);
+      const imageId = user.avatar.public_id;
+  
+      // Check if imageId exists before destroying
+      if (imageId) {
+        await cloudinary.uploader.destroy(imageId);
+      }
+  
+      const myCloud = await cloudinary.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+        timeout: 120000
+      });
+  
+      newUserData.avatar = {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      };
+    }
+  
+    // Update user with new data
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData);
+    if (!user) {
+      return next(new ErrorHandler("User doesn't exist to update", 400));
+    }
+  
+    res.status(200).json({
+      success: true,
     });
-
-    newUserData.avatar = {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
-    };
+  } catch (error) {
+    // Handle Cloudinary or other errors
+    console.error("Profile Update Error:", error);
+    return next(new ErrorHandler("Profile update failed", 500));
   }
-  // console.log("NEW USER DATA",newUserData)
-
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData);
-  if (!user) {
-    return next(
-      new ErrorHandler(`User doesn't exist which you want to update`, 400)
-    );
-  }
-
-  res.status(200).json({
-    success: true,
-  });
+  
 });
 
 // Get all users(admin)

@@ -2,6 +2,7 @@ import { createAction , createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const clearError = createAction("CLEAR_ERROR");
+export const clearErrorReview = createAction("CLEAR_ERROR_REVIEW");
 const baseUrl = process.env.REACT_APP_API_URL;
 
 export const getProduct = createAsyncThunk(
@@ -114,31 +115,27 @@ const productDetailsSlice = createSlice({
 
 // NEw Review
 export const newReview = createAsyncThunk(
-  "newReview",
+  "getNewReview",
   async (reviewData, { rejectWithValue }) => {
     try {
-      const config = {
-        headers : { "Content-type" : "application/json"}
-      }
-      console.log("Review Data : " , reviewData);
+      const config = { headers: { "Content-Type": "application/json" } , withCredentials: true,};
+      // console.log("Review Data : " , reviewData);
 
       const {data} = await axios.put(`${baseUrl}/api/v1/review` , reviewData , config);
 
       return data?.success;
       
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error?.response?.data?.message || error?.message,
-      })
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
 
 const newReviewSlice = createSlice({
-  name: "newReview",
+  name: "newReviewSlice",
   initialState: {
     isLoading: false,
+    success: false,
     review: {},
     isError: false,
     errorMessage: "",
@@ -154,6 +151,7 @@ const newReviewSlice = createSlice({
     });
     builder.addCase(newReview.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.review = action.payload;
       state.success = action.payload;
     });
     builder.addCase(newReview.rejected, (state, action) => {
@@ -161,7 +159,7 @@ const newReviewSlice = createSlice({
       state.isError = true;
       state.errorMessage = action.payload
     });
-    builder.addCase( clearError , (state , action) => {
+    builder.addCase( clearErrorReview , (state , action) => {
       state.errorMessage = null;
     });
     
