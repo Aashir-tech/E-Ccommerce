@@ -115,21 +115,21 @@ const productDetailsSlice = createSlice({
 // NEw Review
 export const newReview = createAsyncThunk(
   "newReview",
-  async ({reviewData}, { rejectWithValue }) => {
+  async (reviewData, { rejectWithValue }) => {
     try {
       const config = {
         headers : { "Content-type" : "application/json"}
       }
-      console.log(reviewData);
+      console.log("Review Data : " , reviewData);
 
-      const response = await axios.put(`${baseUrl}/api/v1/review` , reviewData , config);
+      const {data} = await axios.put(`${baseUrl}/api/v1/review` , reviewData , config);
 
-      return response?.data?.success;
+      return data?.success;
       
     } catch (error) {
       return rejectWithValue({
         success: false,
-        message: error.response?.data?.message || error.message,
+        message: error?.response?.data?.message || error?.message,
       })
     }
   }

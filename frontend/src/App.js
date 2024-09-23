@@ -32,6 +32,7 @@ import OrderDetails from "./component/Order/OrderDetails.js";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { useDispatch } from "react-redux";
 // import { useAlert } from "react-alert";
 import Contact from "./component/layout/Contact/Contact";
 import About from "./component/layout/About/About.js";
@@ -39,6 +40,7 @@ import NotFound from "./component/layout/Not Found/NotFound.js";
 
 function App() {
   // const alert = useAlert();
+  const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -59,7 +61,7 @@ function App() {
     store.dispatch(loadUser());
 
     getStripeApiKey();
-  }, [stripeApiKey]);
+  }, [dispatch]);
 
   return (
     <Router>

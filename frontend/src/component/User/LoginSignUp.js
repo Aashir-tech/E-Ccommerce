@@ -131,7 +131,7 @@ const LoginSignUp = () => {
     if (isAuthenticated) {
       navigate(redirect);
       alert.success("Logged in successfuly")
-      loadUser();
+      
       // console.log("Redirect " , redirect)
     }
   }, [
