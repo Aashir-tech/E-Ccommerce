@@ -70,7 +70,7 @@ export const myOrders = createAsyncThunk(
         try {
             const {data} = await axios.get(`${baseUrl}/api/v1/orders/me`,{ withCredentials: true},);
             console.log(data)
-            return data.orders;
+            return data?.orders;
 
         } catch (error) {
             return isRejectedWithValue({
@@ -120,7 +120,7 @@ export const getOrderDetails = createAsyncThunk(
         try {
             const {data} = await axios.get(`${baseUrl}/api/v1/order/${id}` , {withCredentials: true});
             // console.log(data)
-            return data.order;
+            return data?.order;
 
         } catch (error) {
             return isRejectedWithValue({
