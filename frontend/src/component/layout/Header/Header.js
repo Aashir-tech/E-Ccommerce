@@ -8,6 +8,7 @@ import {ReactNavbar} from 'overlay-navbar'
 import "./Header.css"
 
 const options = {
+  burgerColor:"#eb4034",
   burgerColorHover:"#eb4034",
     logo,
     logoWidth: "20vmax",
