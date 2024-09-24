@@ -205,6 +205,11 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // Update User profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  }
+
   try {
     if (req.body.avatar && req.body.avatar !== "") {
       const user = await User.findById(req.user.id);
@@ -219,7 +224,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         folder: "avatars",
         width: 150,
         crop: "scale",
-        timeout: 120000
+        timeout: 60000
       });
   
       newUserData.avatar = {
