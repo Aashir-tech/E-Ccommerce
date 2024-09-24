@@ -48,7 +48,7 @@ const [stripeApiKey, setStripeApiKey] = useState("");
 
 async function getStripeApiKey() {
   try {
-    const { data } = await axios.get(`${baseUrl}/api/v1/stripeapikey`);
+    const { data } = await axios.get(`${baseUrl}/api/v1/stripeapikey` , {withCredentials : true});
     setStripeApiKey(data?.stripeApiKey);
   } catch (error) {
     alert.error("Failed to fetch Stripe API key.");
