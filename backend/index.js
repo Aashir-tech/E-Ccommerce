@@ -3,15 +3,16 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
-const dotenv = require("dotenv");
 const cors = require("cors")
-
 const path = require("path");
 
 // Configure environment variables
-require("dotenv").config({
-  path: "./.env"
-});
+if(process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({
+    path: "./.env"
+  });
+}
+
 // app.use(cors({
 //   origin : "http://localhost:3000",
 //   credentials: true, 
