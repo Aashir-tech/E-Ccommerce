@@ -18,6 +18,7 @@ import EventIcon from "@mui/icons-material/Event";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useNavigate } from "react-router-dom";
 import { createOrder , removeError } from "../../redux/slice/orderSlice";
+const baseUrl = process.env.REACT_APP_API_URL;
 
 
 const Payment = () => {
@@ -62,7 +63,7 @@ const Payment = () => {
       };
 
       const { data } = await axios.post(
-        "/api/v1/payment/process",
+        `${baseUrl}/api/v1/payment/process`,
         paymentData,
         config
       );
