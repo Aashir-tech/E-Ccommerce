@@ -67,7 +67,7 @@ const Payment = () => {
         config
       );
 
-      const client_secret = data.client_secret;
+      const client_secret = data?.client_secret;
 
       if (!stripe || !elements) return;
 
@@ -88,14 +88,14 @@ const Payment = () => {
         },
       });
 
-      if (result.error) {
+      if (result?.error) {
 
         payBtn.current.disabled = false;
-        alert.error(result.error.message);
+        alert.error(result?.error?.message);
 
       } else {
 
-        if ((result.paymentIntent.status = "succeeded")) {
+        if ((result?.paymentIntent?.status = "succeeded")) {
 
           order.paymentInfo = {
             id : result.paymentIntent.id,
@@ -105,6 +105,7 @@ const Payment = () => {
           dispatch(createOrder(order));
 
           navigate("/success", { replace: true });
+          alert.success("Payment Successful ! Your Order has been placed !")
         } else {
           alert.error("There's some issue while processing payment");
         }

@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk , createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk , createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -6,7 +6,7 @@ export const clearErrors = createAction("CLEAR_ERROR");
 
 export const createOrder = createAsyncThunk(
     "createOrder",
-    async (order) => {
+    async (order , {rejectWithValue}) => {
         try {
             const config = {
                 headers : {
@@ -20,10 +20,7 @@ export const createOrder = createAsyncThunk(
             return data;
 
         } catch (error) {
-            return isRejectedWithValue({
-                success: false,
-                payload: error.response?.data?.message || error.message,
-              })
+            return rejectWithValue(error?.response?.data?.message || error?.message);
         }
     }
 )
@@ -66,17 +63,14 @@ const orderSlice = createSlice({
 // My Orders
 export const myOrders = createAsyncThunk(
     "myOrders",
-    async () => {
+    async (_, {rejectWithValue}) => {
         try {
             const {data} = await axios.get(`${baseUrl}/api/v1/orders/me`,{ withCredentials: true},);
             console.log(data)
             return data?.orders;
 
         } catch (error) {
-            return isRejectedWithValue({
-                success: false,
-                payload: error.response?.data?.message || error.message,
-              })
+            return rejectWithValue(error?.response?.data?.message || error?.message);
         }
     }
 )
@@ -116,17 +110,14 @@ const myOrdersSlice = createSlice({
 // Get Order Details
 export const getOrderDetails = createAsyncThunk(
     "getOrderDetails",
-    async (id) => {
+    async (id , {rejectWithValue}) => {
         try {
             const {data} = await axios.get(`${baseUrl}/api/v1/order/${id}` , {withCredentials: true});
             // console.log(data)
             return data?.order;
 
         } catch (error) {
-            return isRejectedWithValue({
-                success: false,
-                payload: error.response?.data?.message || error.message,
-              })
+            return rejectWithValue(error?.response?.data?.message || error?.message);
         }
     }
 )
