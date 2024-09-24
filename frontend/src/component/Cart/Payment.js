@@ -66,6 +66,7 @@ const Payment = () => {
         paymentData,
         config
       );
+      console.log(data)
 
       const client_secret = data?.client_secret;
 
