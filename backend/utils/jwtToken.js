@@ -3,6 +3,7 @@
 const sendToken = (user, statusCode, res) => {
   const token = user.getJWTToken();
   const isProduction = process.env.NODE_ENV === 'PRODUCTION';
+  console.log("IS PRODUCTION : " , isProduction);
 
   // Options for cookie
   const options = {
