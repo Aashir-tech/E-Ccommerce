@@ -24,13 +24,14 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no 'origin' like server-to-server requests
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true // Allow credentials (cookies, authorization headers) to be included
 }));
 
 // app.use(cors({

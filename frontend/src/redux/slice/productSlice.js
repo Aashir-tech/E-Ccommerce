@@ -22,10 +22,7 @@ export const getProduct = createAsyncThunk(
       return response?.data;
     } catch (error) {
       console.error(error); // Log error for debugging
-      return rejectWithValue({
-        success: false,
-        message: error?.response?.data?.message || error.message,
-      });
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -52,7 +49,7 @@ const productsSlice = createSlice({
     builder.addCase(getProduct.rejected, (state, action) => {
       // state.isLoading = true;
       state.isError = true;
-      state.errorMessage = action.payload?.message || "Failed to fetch product details"
+      state.errorMessage = action.payload || "Failed to fetch product details"
       // console.log("Error Message : " ,state.errorMessage)
       // console.log("Action Payload : " , action.payload)
       // console.log("Error", action.error.message);
@@ -74,10 +71,7 @@ export const getProductDetails = createAsyncThunk(
       return response?.data;
       
     } catch (error) {
-      return rejectWithValue({
-        success: false,
-        message: error.response?.data?.message || error.message,
-      })
+      return rejectWithValue(error?.response?.data?.message || error.message);
     }
   }
 );
@@ -102,7 +96,7 @@ const productDetailsSlice = createSlice({
     builder.addCase(getProductDetails.rejected, (state, action) => {
       // state.isLoading = true;
       state.isError = true;
-      state.errorMessage = action.payload.message
+      state.errorMessage = action.payload
       // console.log("Error Message : " ,state.errorMessage)
       // console.log("Action Payload : " , action.payload)
       // console.log("Error", action.error.message);
