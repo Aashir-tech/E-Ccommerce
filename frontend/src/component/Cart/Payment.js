@@ -56,7 +56,7 @@ const Payment = () => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
         withCredentials: true
       };
@@ -115,7 +115,7 @@ const Payment = () => {
     } catch (error) {
 
       payBtn.current.disabled = false;
-      alert.error(error?.response?.data?.message);
+      alert.error(error.response.data.message);
 
     }
   };
