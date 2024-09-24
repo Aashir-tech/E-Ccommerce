@@ -1,8 +1,8 @@
 // Creating Token and Saving in Cookie
-const isProduction = process.env.NODE_ENV === 'production';
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getJWTToken();
+  const isProduction = process.env.NODE_ENV === 'production';
 
   // Options for cookie
   const options = {
