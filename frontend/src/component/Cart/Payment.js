@@ -56,7 +56,7 @@ const Payment = () => {
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
         withCredentials: true
       };
@@ -89,6 +89,8 @@ const Payment = () => {
         },
       });
 
+      console.log("Stripe Result: ", result);
+
       if (result.error) {
 
         payBtn.current.disabled = false;
@@ -96,7 +98,7 @@ const Payment = () => {
 
       } else {
 
-        if ((result.paymentIntent.status = "succeeded")) {
+        if ((result.paymentIntent.status === "succeeded")) {
 
           order.paymentInfo = {
             id : result.paymentIntent.id,
