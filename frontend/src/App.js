@@ -56,6 +56,19 @@ async function getStripeApiKey() {
   }
 }
 
+function checkCookiesEnabled() {
+  // Try to set a test cookie
+  document.cookie = "testcookie=yes";
+
+  // Check if the cookie was set successfully\
+  const cookiesEnabled = document.cookie.indexOf("testcookie") !== -1;
+
+  if(!cookiesEnabled) {
+    // Show a warning to user that cookies are blocked
+    alert.error("Cookies are disabled or blocked . Please enable cookies for the best experience .")
+  }
+}
+
 
 useEffect(() => {
   WebFont.load({
@@ -63,7 +76,7 @@ useEffect(() => {
       families: ["Roboto", "Droid Sans", "Chilanka", "Open Sans", "Poppins"],
     },
   });
-
+  checkCookiesEnabled();
   dispatch(loadUser());
   getStripeApiKey();
 }, [dispatch ]); // I can add isAuthenticated if I want to refetch the key when authentication state changes
